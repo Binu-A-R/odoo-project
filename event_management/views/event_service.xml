@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="service_action" model="ir.actions.act_window">
+        <field name="name">Service</field>
+        <field name="res_model">event.service</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="event_service_form_view" model="ir.ui.view">
+
+        <field name="model">event.service</field>
+    <field name="arch" type="xml">
+        <form string="event.service  ">
+            <sheet>
+                <group>
+                    <group>
+                        <field name="name"/>
+<!--                        <field name="responsible" widget="res_user_many2one"/>-->
+
+                    </group>
+
+
+                    </group>
+           </sheet>
+
+      </form>
+       </field>
+    </record>
+    <menuitem id="service_menu_action" parent="event_second_level_menu" action="service_action"/>
+</odoo>

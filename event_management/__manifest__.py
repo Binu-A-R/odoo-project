@@ -14,7 +14,9 @@
         'views/event_service.xml',
         'data/event_type_data.xml',
         'data/event_service_data.xml',
-        'views/catering.xml'
+        'views/catering.xml',
+        'data/sequence.xml',
+
     ],
     'installable': True,
     'application': True

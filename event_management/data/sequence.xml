@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+       <record id="catering_sequence" model="ir.sequence">
+           <field name="name">Catering Sequence</field>
+           <field name="code">catering.sequence</field>
+           <field name="prefix">CR</field>
+           <field name="padding">5</field>
+           <field name="company_id" eval="False"/>
+       </record>
+    </data>
+</odoo>

@@ -3,3 +3,4 @@ access_event_property,access_event_property,model_event_property,base.group_user
 access_event_booking,access_event_booking,model_event_booking,base.group_user,1,1,1,1
 access_event_service,access_event_service,model_event_service,base.group_user,1,1,1,1
 access_catering,access_catering,model_catering,base.group_user,1,1,1,1
+

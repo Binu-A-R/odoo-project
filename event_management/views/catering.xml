@@ -10,27 +10,41 @@
             <field name="arch" type="xml">
                 <form string="catering">
                     <sheet>
-<!--                        <div class="oe_title">-->
-<!--                                <h1><field name="event_name"/></h1>-->
-<!--                        </div>-->
+                        <div class="oe_title">
+                                <h1><field name="name_sequence"/></h1>
+                        </div>
                         <group>
-                               <field name="event_id"   options="{'no_create': True}"/>
-                               <field name="date" string="Date"/>
-                               <field name="start_date" string="Start Date"/>
+                            <group>
+                                <field name="event_id"   options="{'no_create': True}"/>
+                                <field name="date" string="Date"/>
+                                <field name="start_date" string="Start Date"/>
                                 <field name="end_date" string="End Date"/>
-                                <field name="guest"/>
+                            </group>
+                            <group>
+                                <field name="welcome_drink"/>
+                                <field name="break_fast"/>
+                                <field name="lunch"/>
+                                <field name="dinner"/>
+                                <field name="snack_drinks"/>
+                                <field name="beverages"/>
+                            </group>
                         </group>
                    </sheet>
                 </form>
             </field>
      </record>
-
-
-
-
-
-
-
-        <menuitem id="catering_menu_action" sequence="1" name ="Catering" parent="event_menu_root" action="catering_action" />
+    <record id="catering_tree_view" model="ir.ui.view">
+            <field name="model">catering</field>
+            <field name="arch" type="xml">
+                <tree string="catering">
+                    <field name="name_sequence" string="Ref. No" />
+                     <field name="event_id"/>
+                    <field name="date" string="Booking Date"/>
+                    <field name="start_date" string="Start Date"/>
+                    <field name="end_date" string="End Date"/>
+                </tree>
+            </field>
+    </record>
+    <menuitem id="catering_menu_action" sequence="1" name ="Catering" parent="event_menu_root" action="catering_action" />
 
 </odoo>

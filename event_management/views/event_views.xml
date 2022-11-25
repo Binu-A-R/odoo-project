@@ -8,7 +8,6 @@
     </record>
 
 
-
 <!--event type-->
     <!--event type view-->
     <record id="event_type_tree_view" model="ir.ui.view">
@@ -17,7 +16,6 @@
        <tree string="event.property">
            <field name="name"/>
            <field name="code"/>
-           <field name="image" widget="image"/>
       </tree>
        </field>
     </record>
@@ -31,27 +29,23 @@
                 <group>
                     <group>
                         <field name="name"/>
-                        <field name="image" widget="image" />
-
+                        <field name="image" widget="image"  />
                     </group>
                     <group>
                         <field name="code"/>
                     </group>
                 </group>
-           </sheet>
-
-      </form>
+            </sheet>
+        </form>
        </field>
     </record>
 
-<!--event booking-->
 
 <!--menu item-->
     <menuitem id="event_menu_root" name="Event Management"  />
     <menuitem id="event_first_level_menu" name="Event Booking" parent="event_menu_root"  />
-<!--        <menuitem id="event_model_menu_action" name=""  parent="event_first_level_menu" action="event_model_action"/>-->
     <menuitem id="event_second_level_menu" name="Configuration" parent="event_menu_root"/>
-        <menuitem id="event_model_menu_action" name="Event Type" parent="event_second_level_menu" action="event_model_action"/>
+    <menuitem id="event_model_menu_action" name="Event Type" parent="event_second_level_menu" action="event_model_action"/>
 
 
 </odoo>

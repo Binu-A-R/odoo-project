@@ -11,7 +11,10 @@
         'security/ir.model.access.csv',
         'views/event_views.xml',
         'views/event_booking.xml',
-        'views/event_service.xml'
+        'views/event_service.xml',
+        'data/event_type_data.xml',
+        'data/event_service_data.xml',
+        'views/catering.xml'
     ],
     'installable': True,
     'application': True

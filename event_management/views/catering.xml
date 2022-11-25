@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="catering_action" model="ir.actions.act_window">
+        <field name="name">Catering</field>
+        <field name="res_model">catering</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="catering_form_view" model="ir.ui.view">
+            <field name="model">catering</field>
+            <field name="arch" type="xml">
+                <form string="catering">
+                    <sheet>
+<!--                        <div class="oe_title">-->
+<!--                                <h1><field name="event_name"/></h1>-->
+<!--                        </div>-->
+                        <group>
+                               <field name="event_id"   options="{'no_create': True}"/>
+                               <field name="date" string="Date"/>
+                               <field name="start_date" string="Start Date"/>
+                                <field name="end_date" string="End Date"/>
+                                <field name="guest"/>
+                        </group>
+                   </sheet>
+                </form>
+            </field>
+     </record>
+
+
+
+
+
+
+
+        <menuitem id="catering_menu_action" sequence="1" name ="Catering" parent="event_menu_root" action="catering_action" />
+
+</odoo>

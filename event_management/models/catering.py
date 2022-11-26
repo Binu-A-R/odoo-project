@@ -3,6 +3,7 @@ from odoo import models, fields, api, _
 
 class Catering(models.Model):
     _name = "catering"
+    _rec_name = 'name_sequence'
 
     event_id = fields.Many2one('event.booking')
     date = fields.Date('event.booking', related='event_id.booking_date')
@@ -19,10 +20,10 @@ class Catering(models.Model):
 
     @api.model
     def create(self, vals):
-        for rec in vals:
 
-            if vals.get('name_sequence', _('New')) == _('New'):
-                vals['name_sequence'] = self.env['ir.sequence'].next_by_code(
-                    'catering.sequence') or _('New')
-                res = super(Catering, self).create(vals)
-            return res
+        if vals.get('name_sequence', _('New')) == _('New'):
+            vals['name_sequence'] = self.env['ir.sequence'].next_by_code(
+                'catering.sequence') or _('New')
+            res = super(Catering, self).create(vals)
+
+        return res

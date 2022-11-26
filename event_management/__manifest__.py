@@ -16,6 +16,7 @@
         'data/event_service_data.xml',
         'views/catering.xml',
         'data/sequence.xml',
+        'views/catering_menu.xml',
 
     ],
     'installable': True,

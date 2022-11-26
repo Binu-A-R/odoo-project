@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="event_catering_menu_action" model="ir.actions.act_window">
+        <field name="name">Catering</field>
+        <field name="res_model">catering.menu</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="event_catering_menu_form_view" model="ir.ui.view">
+    <field name="model">catering.menu</field>
+    <field name="arch" type="xml">
+        <form string="catering.menu">
+            <sheet>
+                <group>
+                    <group>
+                        <field name="dish_name"/>
+                        <field name="category"/>
+                        <field name="unit_price"/>
+
+                    </group>
+<group>
+                            <field name="catering_image" widget="image"  />
+
+                </group>
+            </group>
+            </sheet>
+        </form>
+       </field>
+    </record>
+
+    <menuitem id="event_catering_menu_menu_action" sequence="2" name ="Catering" parent="event_second_level_menu" action="event_catering_menu_action" />
+
+</odoo>

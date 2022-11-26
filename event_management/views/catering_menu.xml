@@ -16,15 +16,26 @@
                         <field name="dish_name"/>
                         <field name="category"/>
                         <field name="unit_price"/>
-
                     </group>
-<group>
+                    <group>
                             <field name="catering_image" widget="image"  />
 
-                </group>
+                    </group>
             </group>
             </sheet>
         </form>
+       </field>
+    </record>
+
+    <record id="event_catering_menu_tree_view" model="ir.ui.view">
+           <field name="model">catering.menu</field>
+       <field name="arch" type="xml">
+       <tree string="catering.menu">
+           <field name="dish_name"/>
+           <field name="category"/>
+           <field name="unit_price"/>
+
+      </tree>
        </field>
     </record>
 

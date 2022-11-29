@@ -13,22 +13,76 @@
                         <div class="oe_title">
                                 <h1><field name="name_sequence"/></h1>
                         </div>
+                    <group>
                         <group>
-                            <group>
-                                <field name="event_id"   options="{'no_create': True}"/>
-                                <field name="date" string="Date"/>
-                                <field name="start_date" string="Start Date"/>
-                                <field name="end_date" string="End Date"/>
-                            </group>
-                            <group>
-                                <field name="welcome_drink"/>
-                                <field name="break_fast"/>
-                                <field name="lunch"/>
-                                <field name="dinner"/>
-                                <field name="snack_drinks"/>
-                                <field name="beverages"/>
-                            </group>
+                            <field name="event_id" options="{'no_create': True}"/>
+                            <field name="date" string="Date"/>
+                            <field name="start_date" string="Start Date"/>
+                            <field name="end_date" string="End Date"/>
+                            <field name="guest"/>
                         </group>
+                        <group>
+
+                                 <field name="welcome_drink" string="Welcome drink"/>
+
+                                <field name="break_fast" />
+
+                            <field name="lunch"/>
+
+                            <field name="dinner"/>
+                            <field name="snack_drinks"/>
+                            <field name="beverages"/>
+                        </group>
+                    </group>
+                     <notebook>
+                        <page string="Welcome Drink Lines" attrs="{'invisible':[('welcome_drink','=',False)]}">
+                            <field name="category_welcome_drink_ids" >
+                                <tree editable="bottom">
+                                    <field name="category_welcome_drink_id" string="Item"/>
+<!--                                    <field name="description" string="Description"/>-->
+                                    <field name ='uom_id' string="UOM"/>
+
+                                </tree>
+                            </field>
+                        </page>
+
+                        <page string="Break Fast Lines" attrs="{'invisible':[('break_fast','=',False)]}">
+                            <field name="category_break_fast_ids" >
+                                <tree editable="bottom">
+                                    <field name="category_break_fast_id" string="Break Fast Menu"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                         <page string="Lunch Lines" attrs="{'invisible':[('lunch','=',False)]}">
+                            <field name="category_lunch_ids" >
+                                <tree editable="bottom">
+                                    <field name="category_lunch_id" string="Lunch Menu"/>
+                                </tree>
+                            </field>
+                        </page>
+                         <page string="Dinner Lines" attrs="{'invisible':[('dinner','=',False)]}">
+                            <field name="category_dinner_ids">
+                                <tree editable="bottom">
+                                    <field name="category_dinner_id" string="Dinner Menu"/>
+                                </tree>
+                            </field>
+                        </page>
+                         <page string="Snacks and Drinks Lines" attrs="{'invisible':[('snack_drinks','=',False)]}">
+                            <field name="category_snack_drinks_ids" >
+                                <tree editable="bottom">
+                                    <field name="category_snack_drinks_id" string="Snacks and Drinks Menu"/>
+                                </tree>
+                            </field>
+                        </page>
+                         <page string="Beverages Lines" attrs="{'invisible':[('beverages','=',False)]}">
+                            <field name="category_beverages_ids" >
+                                <tree editable="bottom">
+                                    <field name="category_beverages_id" string="Beverages Menu"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
                    </sheet>
                 </form>
             </field>

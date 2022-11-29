@@ -15,6 +15,7 @@
                     <group>
                         <field name="dish_name"/>
                         <field name="category"/>
+                        <field name="uom_id"/>
                         <field name="unit_price"/>
                     </group>
                     <group>

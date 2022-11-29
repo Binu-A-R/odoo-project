@@ -4,4 +4,5 @@ access_event_booking,access_event_booking,model_event_booking,base.group_user,1,
 access_event_service,access_event_service,model_event_service,base.group_user,1,1,1,1
 access_catering,access_catering,model_catering,base.group_user,1,1,1,1
 access_catering_menu,access_catering_menu,model_catering_menu,base.group_user,1,1,1,1
+access_catering_line,access_catering_line,model_catering_line,base.group_user,1,1,1,1
 

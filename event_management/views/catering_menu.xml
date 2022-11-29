@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="event_catering_menu_action" model="ir.actions.act_window">
-        <field name="name">Catering</field>
+        <field name="name">Catering Menu</field>
         <field name="res_model">catering.menu</field>
         <field name="view_mode">tree,form</field>
     </record>
@@ -16,6 +16,7 @@
                         <field name="dish_name"/>
                         <field name="category"/>
                         <field name="uom_id"/>
+                        <field name="currency_id" invisible="1"/>
                         <field name="unit_price"/>
                     </group>
                     <group>
@@ -40,6 +41,6 @@
        </field>
     </record>
 
-    <menuitem id="event_catering_menu_menu_action" sequence="2" name ="Catering" parent="event_second_level_menu" action="event_catering_menu_action" />
+    <menuitem id="event_catering_menu_menu_action" sequence="2" name ="Catering Menu" parent="event_second_level_menu" action="event_catering_menu_action" />
 
 </odoo>

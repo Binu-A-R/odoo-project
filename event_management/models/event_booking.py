@@ -32,3 +32,17 @@ class EventBooking(models.Model):
                 (rec.id, '%s : %s / %s : %s' % (rec.event_type_id.name, rec.partner_id.name, rec.start_date,
                                                 rec.end_date)))
         return sequence
+
+
+    def action_catering_service(self):
+        view_mode = 'form'
+        return {
+            'name': 'catering',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'catering',
+            'type': 'ir.actions.act_window',
+            'target': 'current',
+            'context': ({'default_event_id': self.id})
+        }
+

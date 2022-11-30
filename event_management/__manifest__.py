@@ -1,6 +1,6 @@
 {
     'name': 'Events Management',
-    'version': '16.0.1.0.0',
+    'version': '16.0.3.0.0',
     'category':'Event Management',
     'sequence':'1',
     'summary': 'Managing online events and booking events',

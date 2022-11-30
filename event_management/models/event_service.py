@@ -27,4 +27,3 @@ class EventManagement(models.Model):
         def _compute_sub_total(self):
             for rec in self:
                 rec.price_subtotal = rec.unit_price * rec.quantity
-

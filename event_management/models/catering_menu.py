@@ -13,7 +13,7 @@ class CateringMenu(models.Model):
     catering_image = fields.Binary("Image")
     uom_id = fields.Many2one('uom.uom', string='UOM')
     unit_price = fields.Monetary(string="Unit price", required=True)
-    relation_id = fields.Many2one('catering', string='Menu')
+    # relation_id = fields.Many2one('catering', string='Menu')
 
     company_id = fields.Many2one('res.company', string="Company")
     currency_id = fields.Many2one('res.currency', string="Currency",

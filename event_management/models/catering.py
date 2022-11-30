@@ -8,8 +8,8 @@ class Catering(models.Model):
 
     event_id = fields.Many2one('event.booking', string='Event', required=True)
     date = fields.Date('event.booking', related='event_id.booking_date')
-    start_date = fields.Date('event.booking', related='event_id.start_date')
-    end_date = fields.Date('event.booking', related='event_id.end_date')
+    start_date = fields.Datetime('event.booking', related='event_id.start_date')
+    end_date = fields.Datetime('event.booking', related='event_id.end_date')
     guest = fields.Integer("Number of guests", default='1')
     name_sequence = fields.Char(string='Order Reference', required=True, readonly=True, default=lambda self: _('New'))
     welcome_drink = fields.Boolean(string='Welcome Drink')
@@ -19,12 +19,12 @@ class Catering(models.Model):
     snack_drinks = fields.Boolean('Snacks and Drinks')
     beverages = fields.Boolean('Beverages')
 
-    category_welcome_drink_ids = fields.One2many('catering.line', 'catering_menu_id', string="Welcome Drinks")
-    category_break_fast_ids = fields.One2many('catering.line', 'catering_menu_id', string="Break Fast")
-    category_lunch_ids = fields.One2many('catering.line', 'catering_menu_id', string="Lunch")
-    category_dinner_ids = fields.One2many('catering.line', 'catering_menu_id', string="Dinner")
-    category_snack_drinks_ids = fields.One2many('catering.line', 'catering_menu_id', string="Snacks and Drinks")
-    category_beverages_ids = fields.One2many('catering.line', 'catering_menu_id', string="Beverages")
+    category_welcome_drink_ids = fields.One2many('catering.line', 'welcome_drinks_menu_id', string="Welcome Drinks")
+    category_break_fast_ids = fields.One2many('catering.line', 'break_fast_menu_id', string="Break Fast")
+    category_lunch_ids = fields.One2many('catering.line', 'lunch_menu_id', string="Lunch")
+    category_dinner_ids = fields.One2many('catering.line', 'dinner_menu_id', string="Dinner")
+    category_snack_drinks_ids = fields.One2many('catering.line', 'snacks_drink_menu_id', string="Snacks and Drinks")
+    category_beverages_ids = fields.One2many('catering.line', 'beverages_menu_id', string="Beverages")
 
     state = fields.Selection(
         selection=[
@@ -36,6 +36,19 @@ class Catering(models.Model):
         ], default="draft"
     )
 
+    grand_total = fields.Float(string="Grand total", compute='_compute_grand_total')
+
+    @api.onchange('category_welcome_drink_ids.price_subtotal', 'category_break_fast_ids.price_subtotal',
+                  'category_lunch_ids.price_subtotal', 'category_dinner_ids.price_subtotal',
+                  'category_snack_drinks_ids.price_subtotal', 'category_beverages_ids.price_subtotal')
+    def _compute_grand_total(self):
+        self.grand_total = sum((self.category_welcome_drink_ids.mapped('price_subtotal')) +
+                               (self.category_break_fast_ids.mapped('price_subtotal')) +
+                               (self.category_lunch_ids.mapped('price_subtotal')) +
+                               (self.category_dinner_ids.mapped('price_subtotal')) +
+                               (self.category_snack_drinks_ids.mapped('price_subtotal')) +
+                               (self.category_beverages_ids.mapped('price_subtotal')))
+
     def action_confirm(self):
         self.state = 'confirm'
 
@@ -44,8 +57,8 @@ class Catering(models.Model):
 
     @api.onchange('end_date')
     def _action_expired(self):
-        current_date = fields.Date.today()
-        # print(current_date)
+        current_date = datetime.now()
+        print(current_date)
         for rec in self:
             if rec.end_date:
                 if current_date > rec.end_date:
@@ -59,7 +72,7 @@ class Catering(models.Model):
             vals['name_sequence'] = self.env['ir.sequence'].next_by_code(
                 'catering.sequence') or _('New')
             res = super(Catering, self).create(vals)
-        return res
+            return res
 
 
 class CateringLine(models.Model):
@@ -67,6 +80,14 @@ class CateringLine(models.Model):
     _description = "Catering Line"
 
     catering_menu_id = fields.Many2one('catering')
+
+    welcome_drinks_menu_id = fields.Many2one('catering')
+    break_fast_menu_id = fields.Many2one('catering')
+    lunch_menu_id = fields.Many2one('catering')
+    dinner_menu_id = fields.Many2one('catering')
+    snacks_drink_menu_id = fields.Many2one('catering')
+    beverages_menu_id = fields.Many2one('catering')
+
     menu_id = fields.Many2one('catering.menu', string='Item')
     description = fields.Char(string='Description')
     quantity = fields.Integer(string='Quantity', default='1')

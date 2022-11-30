@@ -10,9 +10,8 @@
             <field name="arch" type="xml">
                 <form string="catering">
                     <header>
-                        <button name="action_confirm" string="Confirm" class="btn-primary" type="object"/>
-                        <button name="action_deliver" string="Delivery" class="btn-primary" type="object"/>
-
+                        <button name="action_confirm" string="Confirm" class="btn-primary" type="object"  states="draft" />
+                        <button name="action_deliver" string="Delivery" class="btn-primary" type="object" states="confirm" compute="_action_expired"/>
                         <field name="state" widget="statusbar" statusbar_visible="draft,confirm" string="Status"/>
                     </header>
                     <sheet>
@@ -46,24 +45,24 @@
                                     <field name ='uom' string="UOM"/>
                                     <field name ='unit_price' string="Unit Price" readonly= 'False'/>
                                     <field name="currency_id" invisible="1"/>
-                                    <field name ='price_subtotal' string="Subtotal"/>
+                                    <field name ='price_subtotal' string="Subtotal" sum="price_subtotal"/>
 
                                 </tree>
                             </field>
                         </page>
 
                         <page string="Break Fast Lines" attrs="{'invisible':[('break_fast','=',False)]}">
-                            <field name="category_break_fast_ids" >
+                            <field name="category_break_fast_ids">
                                 <tree editable="bottom">
-                                    <field name="menu_id" string="Item" domain="[('category', '=', 'Break Fast')]"/>-->
+                                    <field name="menu_id" string="Item" domain="[('category', '=', 'Break Fast')]"/>
                                     <field name="description" string="Description"/>
                                     <field name="quantity" string="Quantity"/>
                                     <field name ='uom' string="UOM"/>
                                     <field name ='unit_price' string="Unit Price"/>
                                     <field name="currency_id" invisible="1"/>
-                                    <field name ='price_subtotal' string="Subtotal"/>
+                                    <field name ='price_subtotal' string="Subtotal" sum="price_subtotal"/>
                                 </tree>
-                           </field>-->
+                           </field>
                         </page>
 
                         <page string="Lunch Lines" attrs="{'invisible':[('lunch','=',False)]}">
@@ -75,7 +74,7 @@
                                     <field name ='uom' string="UOM"/>
                                     <field name ='unit_price' string="Unit Price" readonly= 'False'/>
                                     <field name="currency_id" invisible="1"/>
-                                    <field name ='price_subtotal' string="Subtotal"/>
+                                    <field name ='price_subtotal' string="Subtotal" sum="price_subtotal"/>
                                 </tree>
                             </field>
                         </page>
@@ -88,7 +87,7 @@
                                     <field name ='uom' string="UOM"/>
                                     <field name ='unit_price' string="Unit Price" readonly= 'False'/>
                                     <field name="currency_id" invisible="1"/>
-                                    <field name ='price_subtotal' string="Subtotal"/>
+                                    <field name ='price_subtotal' string="Subtotal" sum="price_subtotal"/>
                                 </tree>
                             </field>
                         </page>
@@ -101,7 +100,7 @@
                                     <field name ='uom' string="UOM"/>
                                     <field name ='unit_price' string="Unit Price" readonly= 'False'/>
                                     <field name="currency_id" invisible="1"/>
-                                    <field name ='price_subtotal' string="Subtotal"/>
+                                    <field name ='price_subtotal' string="Subtotal" sum="price_subtotal"/>
                                </tree>
                             </field>
                         </page>
@@ -114,11 +113,15 @@
                                     <field name ='uom' string="UOM"/>
                                     <field name ='unit_price' string="Unit Price" readonly= 'False'/>
                                     <field name="currency_id" invisible="1"/>
-                                    <field name ='price_subtotal' string="Subtotal"/>
+                                    <field name ='price_subtotal' string="Subtotal" sum="price_subtotal"/>
                                  </tree>
                             </field>
                         </page>
                     </notebook>
+                        <group style="margin-left:1100px">
+                                <field name="grand_total"  string="Grand total:" decoration-bf="1" attrs="{'invisible':[('beverages','=',False),
+                                ('snack_drinks','=',False),('dinner','=',False),('lunch','=',False),('break_fast','=',False),('welcome_drink','=',False)]}"/>
+                        </group>
                    </sheet>
                 </form>
             </field>
@@ -132,6 +135,7 @@
                     <field name="date" string="Booking Date"/>
                     <field name="start_date" string="Start Date"/>
                     <field name="end_date" string="End Date"/>
+                    <field name="state" string="Status"/>
                 </tree>
             </field>
     </record>

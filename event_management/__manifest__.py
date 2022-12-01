@@ -14,10 +14,12 @@
         'views/event_booking.xml',
         'views/event_service.xml',
         'data/event_type_data.xml',
+        'data/scheduled_action.xml',
         'data/event_service_data.xml',
         'views/catering.xml',
         'data/sequence.xml',
         'views/catering_menu.xml',
+        'data/catering_menu_data.xml'
 
     ],
     'installable': True,

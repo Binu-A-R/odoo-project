@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="orange_juice" model="catering.menu">
+        <field name="dish_name">Orange Juice</field>
+        <field name="category">Welcome Drink</field>
+        <field name="unit_price">20</field>
+    </record>
+
+    <record id="dosa" model="catering.menu">
+        <field name="dish_name">Dosa</field>
+        <field name="category">Break Fast</field>
+        <field name="unit_price">200</field>
+    </record>
+
+<record id="biriyani" model="catering.menu">
+        <field name="dish_name">Biriyani</field>
+        <field name="category">Lunch</field>
+        <field name="unit_price">180</field>
+    </record>
+
+
+</odoo>

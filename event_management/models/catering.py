@@ -55,16 +55,30 @@ class Catering(models.Model):
     def action_deliver(self):
         self.state = 'deliver'
 
-    @api.onchange('end_date')
-    def _action_expired(self):
+    @api.model
+    def validation_cron(self):
         current_date = datetime.now()
         print(current_date)
-        for rec in self:
+        for rec in self.search([('state', '!=', 'confirm')]):
             if rec.end_date:
+                print(rec.end_date)
                 if current_date > rec.end_date:
-                    self.state = 'expired'
+                    print("expired")
+                    res = rec.write({'state': 'expired'})
                 else:
-                    self.state = 'draft'
+                    res = rec.write({'state': 'draft'})
+        return res
+
+    # @api.onchange('end_date')
+    # def _action_expired(self):
+    #     current_date = datetime.now()
+    #     print(current_date)
+    #     for rec in self:
+    #         if rec.end_date:
+    #             if current_date > rec.end_date:
+    #                 self.state = 'expired'
+    #             else:
+    #                 self.state = 'draft'
 
     @api.model
     def create(self, vals):

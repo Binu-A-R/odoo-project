@@ -14,6 +14,20 @@ class EventBooking(models.Model):
     start_date = fields.Datetime("Start Date", required=True)
     end_date = fields.Datetime("End Date", required=True)
     duration_id = fields.Char(string='Duration', compute='_duration_id')
+    state = fields.Selection(
+        selection=[
+            ('draft', 'Draft'),
+            ('confirm', 'Confirmed'),
+            ('deliver', 'Delivered'),
+            ('invoice', 'Invoiced'),
+            ('expired', 'Expired'),
+        ], default="draft"
+    )
+
+    @api.onchange()
+    def action_confirm(self):
+        self.state = 'confirm'
+        self.env['catering'].search([('state', '=', 'draft')]).action_confirm()
 
     @api.onchange('start_date', 'end_date')
     def _duration_id(self):
@@ -36,7 +50,7 @@ class EventBooking(models.Model):
     def action_catering_service(self):
         return {
             'name': 'catering',
-            'view_type': 'form',
+            # 'view_type': 'form',
             'view_mode': 'form',
             'res_model': 'catering',
             'type': 'ir.actions.act_window',

@@ -7,7 +7,7 @@ class Catering(models.Model):
     _rec_name = 'name_sequence'
 
     event_id = fields.Many2one('event.booking', string='Event', required=True)
-    date = fields.Date('event.booking', related='event_id.booking_date')
+    date = fields.Date('Booking Date', related='event_id.booking_date')
     start_date = fields.Datetime('event.booking', related='event_id.start_date')
     end_date = fields.Datetime('event.booking', related='event_id.end_date')
     guest = fields.Integer("Number of guests", default='1')
@@ -18,7 +18,6 @@ class Catering(models.Model):
     dinner = fields.Boolean('Dinner')
     snack_drinks = fields.Boolean('Snacks and Drinks')
     beverages = fields.Boolean('Beverages')
-
     category_welcome_drink_ids = fields.One2many('catering.line', 'welcome_drinks_menu_id', string="Welcome Drinks")
     category_break_fast_ids = fields.One2many('catering.line', 'break_fast_menu_id', string="Break Fast")
     category_lunch_ids = fields.One2many('catering.line', 'lunch_menu_id', string="Lunch")
@@ -38,9 +37,9 @@ class Catering(models.Model):
 
     grand_total = fields.Float(string="Grand total", compute='_compute_grand_total')
 
-    @api.onchange('category_welcome_drink_ids.price_subtotal', 'category_break_fast_ids.price_subtotal',
-                  'category_lunch_ids.price_subtotal', 'category_dinner_ids.price_subtotal',
-                  'category_snack_drinks_ids.price_subtotal', 'category_beverages_ids.price_subtotal')
+    @api.depends('category_welcome_drink_ids.price_subtotal', 'category_break_fast_ids.price_subtotal',
+                 'category_lunch_ids.price_subtotal', 'category_dinner_ids.price_subtotal',
+                 'category_snack_drinks_ids.price_subtotal', 'category_beverages_ids.price_subtotal')
     def _compute_grand_total(self):
         self.grand_total = sum((self.category_welcome_drink_ids.mapped('price_subtotal')) +
                                (self.category_break_fast_ids.mapped('price_subtotal')) +
@@ -58,6 +57,7 @@ class Catering(models.Model):
     @api.model
     def validation_cron(self):
         current_date = datetime.now()
+        res = 0
         print(current_date)
         for rec in self.search([('state', '!=', 'confirm')]):
             if rec.end_date:
@@ -116,5 +116,5 @@ class CateringLine(models.Model):
     price_subtotal = fields.Monetary(string='subtotal')
 
     @api.onchange('unit_price', 'quantity')
-    def _sub_total(self):
+    def _onchange_price_subtotal(self):
         self.price_subtotal = self.unit_price * self.quantity

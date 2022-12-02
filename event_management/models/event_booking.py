@@ -17,14 +17,13 @@ class EventBooking(models.Model):
     state = fields.Selection(
         selection=[
             ('draft', 'Draft'),
+            ('catering_done', 'Catering Done'),
             ('confirm', 'Confirmed'),
-            ('deliver', 'Delivered'),
             ('invoice', 'Invoiced'),
-            ('expired', 'Expired'),
+
         ], default="draft"
     )
 
-    @api.onchange()
     def action_confirm(self):
         self.state = 'confirm'
         self.env['catering'].search([('state', '=', 'draft')]).action_confirm()
@@ -48,12 +47,35 @@ class EventBooking(models.Model):
         return sequence
 
     def action_catering_service(self):
+        self.state = "catering_done"
         return {
             'name': 'catering',
-            # 'view_type': 'form',
             'view_mode': 'form',
             'res_model': 'catering',
             'type': 'ir.actions.act_window',
             'target': 'current',
-            'context': ({'default_event_id': self.id})
+            'context': {'default_event_id': self.id}
+        }
+
+    def action_invoice(self):
+        self.state = 'invoice'
+        self.env['account.move'].create({'move_type': 'out_invoice'})
+        self.env['catering'].search([('event_id', '=', 'self.id')])
+        print(self.env['catering'].search([('event_id', '=', 'self.id')]))
+        invoice = self.env['account.move'].create({
+            'move_type': 'out_invoice',
+            'partner_id': self.partner_id.id,
+            # 'invoice_line_ids':  [(0, 0, {
+        #         'product_id': self.id.id,
+        #     })for rec in self.id
+        #     ]
+        })
+        return {
+                'name': 'catering',
+                'view_mode': 'form',
+                'res_model': 'account.move',
+                'res_id': invoice.id,
+                'type': 'ir.actions.act_window',
+                'target': 'current',
+                'context': {'default': self.id}
         }

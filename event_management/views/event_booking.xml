@@ -10,8 +10,9 @@
             <field name="arch" type="xml">
                 <form string="event.booking ">
                    <header>
-                       <button name="action_catering_service" string="Catering Service" class="btn-primary" type="object"/>
-                       <button name="action_confirm" string="Confirm" class="btn-primary" type="object"  states="draft" />
+                       <button name="action_catering_service" states="draft" string="Catering Service" class="btn-primary" type="object"/>
+                       <button name="action_confirm" string="Confirm" class="btn-primary" type="object"   />
+                       <button name="action_invoice" string=" create Invoice" class="btn-primary" type="object" />
                        <field name="state" widget="statusbar" statusbar_visible="draft,confirm" string="Status"/>
                    </header>
                    <sheet>
@@ -48,11 +49,9 @@
         <field name="arch" type="xml">
             <tree string="event.booking">
                 <field name="event_name" string="Name" />
-<!--                <field name="name"/>-->
                 <field name="booking_date"/>
                 <field name="start_date"/>
                 <field name="end_date"/>
-                <field name="state" string="Status"/>
             </tree>
         </field>
     </record>

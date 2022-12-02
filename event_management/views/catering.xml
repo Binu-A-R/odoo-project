@@ -87,7 +87,7 @@
                                     <field name ='uom' string="UOM"/>
                                     <field name ='unit_price' string="Unit Price" readonly= 'False'/>
                                     <field name="currency_id" invisible="1"/>
-                                    <field name ='price_subtotal' string="Subtotal" sum="price_subtotal"/>
+                                    <field name ='price_subtotal' string="Subtotal" sum="price_total"/>
                                 </tree>
                             </field>
                         </page>

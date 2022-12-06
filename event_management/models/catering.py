@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from odoo import models, fields, api, _
 from datetime import datetime
 
@@ -8,16 +10,16 @@ class Catering(models.Model):
 
     event_id = fields.Many2one('event.booking', string='Event', required=True)
     date = fields.Date('Booking Date', related='event_id.booking_date')
-    start_date = fields.Datetime('event.booking', related='event_id.start_date')
-    end_date = fields.Datetime('event.booking', related='event_id.end_date')
+    start_date = fields.Datetime(related='event_id.start_date')
+    end_date = fields.Datetime(related='event_id.end_date')
     guest = fields.Integer("Number of guests", default='1')
-    name_sequence = fields.Char(string='Order Reference', required=True, readonly=True, default=lambda self: _('New'))
-    welcome_drink = fields.Boolean(string='Welcome Drink')
-    break_fast = fields.Boolean('Break Fast')
-    lunch = fields.Boolean('Lunch')
-    dinner = fields.Boolean('Dinner')
-    snack_drinks = fields.Boolean('Snacks and Drinks')
-    beverages = fields.Boolean('Beverages')
+    name_sequence = fields.Char(string='Order Reference', readonly=True, default=lambda self: _('New'))
+    is_welcome_drink = fields.Boolean(string='Welcome Drink')
+    is_break_fast = fields.Boolean('Break Fast')
+    is_lunch = fields.Boolean('Lunch')
+    is_dinner = fields.Boolean('Dinner')
+    is_snack_drinks = fields.Boolean('Snacks and Drinks')
+    is_beverages = fields.Boolean('Beverages')
     category_welcome_drink_ids = fields.One2many('catering.line', 'welcome_drinks_menu_id', string="Welcome Drinks")
     category_break_fast_ids = fields.One2many('catering.line', 'break_fast_menu_id', string="Break Fast")
     category_lunch_ids = fields.One2many('catering.line', 'lunch_menu_id', string="Lunch")
@@ -69,17 +71,6 @@ class Catering(models.Model):
                     res = rec.write({'state': 'draft'})
         return res
 
-    # @api.onchange('end_date')
-    # def _action_expired(self):
-    #     current_date = datetime.now()
-    #     print(current_date)
-    #     for rec in self:
-    #         if rec.end_date:
-    #             if current_date > rec.end_date:
-    #                 self.state = 'expired'
-    #             else:
-    #                 self.state = 'draft'
-
     @api.model
     def create(self, vals):
         if vals.get('name_sequence', _('New')) == _('New'):
@@ -93,19 +84,16 @@ class CateringLine(models.Model):
     _name = "catering.line"
     _description = "Catering Line"
 
-    catering_menu_id = fields.Many2one('catering')
-
     welcome_drinks_menu_id = fields.Many2one('catering')
     break_fast_menu_id = fields.Many2one('catering')
     lunch_menu_id = fields.Many2one('catering')
     dinner_menu_id = fields.Many2one('catering')
     snacks_drink_menu_id = fields.Many2one('catering')
     beverages_menu_id = fields.Many2one('catering')
-
     menu_id = fields.Many2one('catering.menu', string='Item')
     description = fields.Char(string='Description')
     quantity = fields.Integer(string='Quantity', default='1')
-    uom = fields.Many2one('uom.uom', string='Unit of Measure', related='menu_id.uom_id')
+    uom_id = fields.Many2one('uom.uom', related='menu_id.uom_id')
     company_id = fields.Many2one('res.company', store=True, copy=False,
                                  string="Company",
                                  default=lambda self: self.env.user.company_id.id)

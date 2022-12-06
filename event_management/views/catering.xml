@@ -27,22 +27,22 @@
                             <field name="guest"/>
                         </group>
                         <group>
-                            <field name="welcome_drink" string="Welcome drink"/>
-                            <field name="break_fast" />
-                            <field name="lunch"/>
-                            <field name="dinner"/>
-                            <field name="snack_drinks"/>
-                            <field name="beverages"/>
+                            <field name="is_welcome_drink" string="Welcome drink"/>
+                            <field name="is_break_fast" />
+                            <field name="is_lunch"/>
+                            <field name="is_dinner"/>
+                            <field name="is_snack_drinks"/>
+                            <field name="is_beverages"/>
                         </group>
                     </group>
                     <notebook>
-                        <page string="Welcome Drink Lines" attrs="{'invisible':[('welcome_drink','=',False)]}">
+                        <page string="Welcome Drink Lines" attrs="{'invisible':[('is_welcome_drink','=',False)]}">
                             <field name="category_welcome_drink_ids" >
                                 <tree editable="bottom">
                                     <field name="menu_id" string="Item" domain = "[('category', '=', 'Welcome Drink')]"/>
                                     <field name="description" string="Description"/>
                                     <field name="quantity" string="Quantity"/>
-                                    <field name ='uom' string="UOM"/>
+                                    <field name ='uom_id' string="UOM"/>
                                     <field name ='unit_price' string="Unit Price" readonly= 'False'/>
                                     <field name="currency_id" invisible="1"/>
                                     <field name ='price_subtotal' string="Subtotal" sum="price_subtotal"/>
@@ -51,13 +51,13 @@
                             </field>
                         </page>
 
-                        <page string="Break Fast Lines" attrs="{'invisible':[('break_fast','=',False)]}">
+                        <page string="Break Fast Lines" attrs="{'invisible':[('is_break_fast','=',False)]}">
                             <field name="category_break_fast_ids">
                                 <tree editable="bottom">
                                     <field name="menu_id" string="Item" domain="[('category', '=', 'Break Fast')]"/>
                                     <field name="description" string="Description"/>
                                     <field name="quantity" string="Quantity"/>
-                                    <field name ='uom' string="UOM"/>
+                                    <field name ='uom_id' string="UOM"/>
                                     <field name ='unit_price' string="Unit Price"/>
                                     <field name="currency_id" invisible="1"/>
                                     <field name ='price_subtotal' string="Subtotal" sum="price_subtotal"/>
@@ -65,52 +65,52 @@
                            </field>
                         </page>
 
-                        <page string="Lunch Lines" attrs="{'invisible':[('lunch','=',False)]}">
+                        <page string="Lunch Lines" attrs="{'invisible':[('is_lunch','=',False)]}">
                             <field name="category_lunch_ids" >
                                 <tree editable="bottom">
                                     <field name="menu_id" string="Item" domain="[('category', '=', 'Lunch')]"/>
                                     <field name="description" string="Description"/>
                                     <field name="quantity" string="Quantity"/>
-                                    <field name ='uom' string="UOM"/>
+                                    <field name ='uom_id' string="UOM"/>
                                     <field name ='unit_price' string="Unit Price" readonly= 'False'/>
                                     <field name="currency_id" invisible="1"/>
                                     <field name ='price_subtotal' string="Subtotal" sum="price_subtotal"/>
                                 </tree>
                             </field>
                         </page>
-                        <page string="Dinner Lines" attrs="{'invisible':[('dinner','=',False)]}">
+                        <page string="Dinner Lines" attrs="{'invisible':[('is_dinner','=',False)]}">
                             <field name="category_dinner_ids">
                                 <tree editable="bottom">
                                     <field name="menu_id" string="Item" domain="[('category', '=', 'Dinner')]"/>
                                     <field name="description" string="Description"/>
                                     <field name="quantity" string="Quantity"/>
-                                    <field name ='uom' string="UOM"/>
+                                    <field name ='uom_id' string="UOM"/>
                                     <field name ='unit_price' string="Unit Price" readonly= 'False'/>
                                     <field name="currency_id" invisible="1"/>
                                     <field name ='price_subtotal' string="Subtotal" sum="price_total"/>
                                 </tree>
                             </field>
                         </page>
-                         <page string="Snacks and Drinks Lines" attrs="{'invisible':[('snack_drinks','=',False)]}">
+                         <page string="Snacks and Drinks Lines" attrs="{'invisible':[('is_snack_drinks','=',False)]}">
                             <field name="category_snack_drinks_ids" >
                                 <tree editable="bottom">
                                     <field name="menu_id" string="Item" domain="[('category', '=', 'Snacks and Drinks')]"/>
                                     <field name="description" string="Description"/>
                                     <field name="quantity" string="Quantity"/>
-                                    <field name ='uom' string="UOM"/>
+                                    <field name ='uom_id' string="UOM"/>
                                     <field name ='unit_price' string="Unit Price" readonly= 'False'/>
                                     <field name="currency_id" invisible="1"/>
                                     <field name ='price_subtotal' string="Subtotal" sum="price_subtotal"/>
                                </tree>
                             </field>
                         </page>
-                         <page string="Beverages Lines" attrs="{'invisible':[('beverages','=',False)]}">
+                         <page string="Beverages Lines" attrs="{'invisible':[('is_beverages','=',False)]}">
                              <field name="category_beverages_ids" >
                                  <tree editable="bottom">
                                     <field name="menu_id" string="Item"  domain="[('category', '=', 'Beverages')]"/>
                                     <field name="description" string="Description"/>
                                     <field name="quantity" string="Quantity"/>
-                                    <field name ='uom' string="UOM"/>
+                                    <field name ='uom_id' string="UOM"/>
                                     <field name ='unit_price' string="Unit Price" readonly= 'False'/>
                                     <field name="currency_id" invisible="1"/>
                                     <field name ='price_subtotal' string="Subtotal" sum="price_subtotal"/>
@@ -119,8 +119,8 @@
                         </page>
                     </notebook>
                         <group style="margin-left:1100px">
-                                <field name="grand_total"  string="Grand total:" decoration-bf="1" attrs="{'invisible':[('beverages','=',False),
-                                ('snack_drinks','=',False),('dinner','=',False),('lunch','=',False),('break_fast','=',False),('welcome_drink','=',False)]}"/>
+                                <field name="grand_total"  string="Grand total:" decoration-bf="1" attrs="{'invisible':[('is_beverages','=',False),
+                                ('is_snack_drinks','=',False),('is_dinner','=',False),('is_lunch','=',False),('is_break_fast','=',False),('is_welcome_drink','=',False)]}"/>
                         </group>
                    </sheet>
                 </form>

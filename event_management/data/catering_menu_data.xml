@@ -9,7 +9,7 @@
     <record id="dosa" model="catering.menu">
         <field name="dish_name">Dosa</field>
         <field name="category">Break Fast</field>
-        <field name="unit_price">200</field>
+        <field name="unit_price">50</field>
     </record>
 
 <record id="biriyani" model="catering.menu">

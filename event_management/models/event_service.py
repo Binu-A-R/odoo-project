@@ -1,9 +1,11 @@
+# -*- coding: utf-8 -*-
+
 from odoo import models, fields, api
 
 
 class EventManagement(models.Model):
     _name = "event.service"
-    _description = "event.service"
+    _description = "Event Service"
 
     name = fields.Char("Name",  required=True)
     user_id = fields.Many2one('res.users', string='Responsible Person')

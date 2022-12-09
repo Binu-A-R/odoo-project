@@ -118,15 +118,12 @@ class EventBooking(models.Model):
                          }))
 
         invoice = self.env['account.move'].create({
-                # 'move_id': self.id,
                 'move_type': 'out_invoice',
                 'partner_id': self.partner_id.id,
                 'invoice_line_ids': vals,
                 })
-        print('rf',invoice.id)
 
         self.invoice_id= invoice.id
-        print('dff',self.invoice_id)
         return {
                 'view_mode': 'form',
                 'res_model': 'account.move',
@@ -135,8 +132,6 @@ class EventBooking(models.Model):
                 'target': 'current',
         }
     def action_view_invoice(self):
-        print('aa')
-
         return {
                 'type': 'ir.actions.act_window',
                 'name': 'invoice',
@@ -149,7 +144,6 @@ class EventBooking(models.Model):
         return result
 
     def action_view_catering(self):
-        print('aa')
         event = self.env['catering'].search([('event_id', '=', self.id)])
 
         return {
@@ -160,7 +154,6 @@ class EventBooking(models.Model):
                 'res_id':event.id,
                 'target': 'current',
             }
-        return result
 
 class EventBookingInvoice(models.Model):
     _inherit = 'account.move'

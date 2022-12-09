@@ -17,7 +17,7 @@
                    </header>
                    <sheet>
                        <div class="oe_button_box" name="button_box">
-                            <button name="action_view_invoice" type="object" class="oe_stat_button" icon="fa-pencil-square-o"  attrs="{'invisible': [('state', '!=', 'invoice')]}" string="Invoices"/>
+                            <button name="action_view_invoice" type="object" class="oe_stat_button" icon="fa-pencil-square-o"  attrs="{'invisible': [('state', 'not in', ['invoice','paid'])]}" string="Invoices"/>
                            <button name="action_view_catering" type="object" class="oe_stat_button" icon="fa-cutlery"  attrs="{'invisible': [('state', '=', 'draft')]}" string="catering"/>
 
                        </div>

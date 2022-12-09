@@ -116,8 +116,8 @@
                                     <field name ='price_subtotal' string="Subtotal" sum="price_subtotal"/>
                                  </tree>
                             </field>
-                        </page>
-                    </notebook>
+                            </page>
+                        </notebook>
                         <group style="margin-left:1100px">
                                 <field name="grand_total"  string="Grand total:" decoration-bf="1" attrs="{'invisible':[('is_beverages','=',False),
                                 ('is_snack_drinks','=',False),('is_dinner','=',False),('is_lunch','=',False),('is_break_fast','=',False),('is_welcome_drink','=',False)]}"/>

@@ -13,8 +13,6 @@ class EventBooking(models.Model):
     event_type_id = fields.Many2one('event.property', required=True)
     booking_date = fields.Date("Booking Date")
     start_date = fields.Datetime("Start Date", required=True)
-    invoice_count = fields.Integer(string="Invoice Count", compute='_get_invoiced')
-
     end_date = fields.Datetime("End Date", required=True)
     duration = fields.Char(string='Duration', compute='onchange_duration_id')
     state = fields.Selection(
@@ -23,9 +21,12 @@ class EventBooking(models.Model):
             ('catering_done', 'Catering Done'),
             ('confirm', 'Confirmed'),
             ('invoice', 'Invoiced'),
+            ('paid','Paid')
 
         ], default="draft"
     )
+    invoice_id = fields.Many2one('account.move')
+
 
     def action_confirm(self):
         self.state = 'confirm'
@@ -61,6 +62,8 @@ class EventBooking(models.Model):
         }
 
     def action_invoice(self):
+        self.write({'state': 'invoice'})
+
         vals = []
         rec = self.env['catering'].search([('event_id', '=', self.id)])
         for line in rec.category_welcome_drink_ids:
@@ -115,12 +118,15 @@ class EventBooking(models.Model):
                          }))
 
         invoice = self.env['account.move'].create({
+                # 'move_id': self.id,
                 'move_type': 'out_invoice',
                 'partner_id': self.partner_id.id,
                 'invoice_line_ids': vals,
                 })
-        # self.state = 'invoice'
+        print('rf',invoice.id)
 
+        self.invoice_id= invoice.id
+        print('dff',self.invoice_id)
         return {
                 'view_mode': 'form',
                 'res_model': 'account.move',
@@ -129,27 +135,43 @@ class EventBooking(models.Model):
                 'target': 'current',
         }
     def action_view_invoice(self):
-        self.ensure_one()
+        print('aa')
 
-        result = {
-            "type": "ir.actions.act_window",
-            "res_model": "event.booking",
-            "domain": [('id', 'in', move_ids)],
-            "context": {"create": False},
-            "name": "Invoices",
-            'view_mode': 'tree,form',
-        }
+        return {
+                'type': 'ir.actions.act_window',
+                'name': 'invoice',
+                'view_mode': 'tree',
+                'view_id': self.env.ref('account.view_move_form').id,
+                'res_model': 'account.move',
+                'res_id':self.invoice_id.id,
+                'target': 'current',
+            }
         return result
 
+    def action_view_catering(self):
+        print('aa')
+        event = self.env['catering'].search([('event_id', '=', self.id)])
+
+        return {
+                'type': 'ir.actions.act_window',
+                'name': 'catering',
+                'view_mode': 'form',
+                'res_model': 'catering',
+                'res_id':event.id,
+                'target': 'current',
+                'context': ({'default_event_id': self.event_name})
+            }
+        return result
 
 class EventBookingInvoice(models.Model):
     _inherit = 'account.move'
+    move_id = fields.Many2one('account.move')
+
     def action_register_payment(self):
         res = super(EventBookingInvoice,self).action_register_payment()
         if res:
-            print("print")
-            state=self.env['event.booking'].search([('state', '=', 'confirm')])
-            state.write({'state': 'invoice'})
-
-
-
+            self.payment_state ='paid'
+            state=self.env['event.booking'].search([('event_name.id', '=', self.id)])
+            print('id=',self.id)
+            print('state=',state)
+            state.write({'state': 'paid'})

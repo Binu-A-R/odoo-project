@@ -12,16 +12,16 @@
                    <header>
                        <button name="action_catering_service" states="draft" string="Catering Service" class="btn-primary" type="object"/>
                        <button name="action_confirm" string="Confirm" class="btn-primary" type="object" states="catering_done"  />
-                       <button name="action_invoice" string=" create Invoice" class="btn-primary" type="object" />
-                       <field name="state" widget="statusbar" statusbar_visible="draft,confirm" string="Status"/>
+                       <button name="action_invoice" string=" create Invoice" class="btn-primary" type="object" states="confirm" />
+                       <field name="state" widget="statusbar" statusbar_visible="draft,confirm,invoice" string="Status"/>
                    </header>
                    <sheet>
                        <div class="oe_button_box" name="button_box">
-                        <button name="action_view_invoice" type="object" class="oe_stat_button" icon="fa-pencil-square-o" modifiers="{&quot;invisible&quot;: [[&quot;invoice_count&quot;, &quot;=&quot;, 0]]}">
-<!--                        <field name="invoice_count" widget="statinfo" string="Invoices" modifiers="{&quot;readonly&quot;: true}"/>-->
-                    </button>
+                            <button name="action_view_invoice" type="object" class="oe_stat_button" icon="fa-pencil-square-o"  attrs="{'invisible': [('state', '!=', 'invoice')]}" string="Invoices"/>
+                           <button name="action_view_catering" type="object" class="oe_stat_button" icon="fa-cutlery"  attrs="{'invisible': [('state', '=', 'draft')]}" string="catering"/>
+
                        </div>
-                        <widget name="web_ribbon" title="Paid" attrs="{'invisible': [('state', '!=', 'invoice')]}"/>
+                        <widget name="web_ribbon" title="Paid" attrs="{'invisible': [('state', '!=', 'paid')]}"/>
                         <div class="oe_title">
                                 <h1><field name="event_name"/></h1>
                         </div>

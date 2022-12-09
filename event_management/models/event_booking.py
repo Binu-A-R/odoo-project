@@ -159,13 +159,11 @@ class EventBooking(models.Model):
                 'res_model': 'catering',
                 'res_id':event.id,
                 'target': 'current',
-                'context': ({'default_event_id': self.event_name})
             }
         return result
 
 class EventBookingInvoice(models.Model):
     _inherit = 'account.move'
-    move_id = fields.Many2one('account.move')
 
     def action_register_payment(self):
         res = super(EventBookingInvoice,self).action_register_payment()

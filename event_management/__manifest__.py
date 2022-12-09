@@ -2,7 +2,6 @@
     'name': 'Events Management',
     'version': '16.0.4.0.0',
     'category':'Event Management',
-    'sequence':'1',
     'summary': 'Managing online events and booking events',
     'description': 'Managing online events and booking events',
     'depends': [

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="contact_tolerance_view" model="ir.ui.view">
+            <field name="name">Contact Tolerance</field>
+        	<field name="model">res.partner</field>
+        	<field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='vat']" position="after">
+                    <field name="tolerance"/>
+                </xpath>
+            </field>
+
+        </record>
+    </data>
+</odoo>

@@ -141,7 +141,7 @@ class EventBooking(models.Model):
                 'res_id':self.invoice_id.id,
                 'target': 'current',
             }
-        return result
+        # return result
 
     def action_view_catering(self):
         event = self.env['catering'].search([('event_id', '=', self.id)])

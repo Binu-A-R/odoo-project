@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    <record id="res_config_settings_view_form_frequent" model="ir.ui.view">
+    <field name="name">res.config.settings.view.form.inherit.sale.frequent</field>
+    <field name="model">res.config.settings</field>
+    <field name="inherit_id" ref="base.res_config_settings_view_form" />
+    <field name="arch" type="xml">
+    <xpath expr="//div[@data-key='sale_management']//div[@id='pricing_setting_container']" position="inside">
+
+        <div class="col-12 col-lg-6 o_setting_box_section" id="discount_limit_as_per_month" title="The Discount Limit per months">
+
+            <div class="o_setting_left_pane">
+                <field name="is_discount_limit"/>
+            </div>
+            <div class="o_setting_right_pane">
+                <label for="is_discount_limit"/>
+                <div class="text-muted">
+                   <span> Set maximum discount limit per month.</span>
+                </div>
+                <div class="content-group" attrs="{'invisible':[('is_discount_limit','=',False)]}" >
+                    <div class="mt16">
+                       Default Limit:<field name="total_amount_limit" widget="monetary"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </xpath>
+    </field>
+    </record>
+
+    </data>
+</odoo>

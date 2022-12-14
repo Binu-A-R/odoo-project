@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="event_report_wizard_view_form" model="ir.ui.view">
+        <field name="name">event.report.wizard.form</field>
+        <field name="model">event.report</field>
+        <field name="arch" type="xml">
+            <form string="PDF report">
+                <group>
+                    <field name="from_date"/>
+                    <field name="to_date"/>
+                    <field name="event_type_id"/>
+                    <field name="is_catering"/>
+                </group>
+                <footer>
+                    <button name="print_report" string="Print" type="object" class="btn-primary"/>
+
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="event_report_wizard_action" model="ir.actions.act_window">
+        <field name="name">PDF report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">event.report</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="event_report_wizard_view_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="event_report_menu_action" sequence="3" name="Report" parent="event_menu_root"
+              action="event_report_wizard_action"/>
+
+</odoo>

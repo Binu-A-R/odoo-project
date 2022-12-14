@@ -2,6 +2,7 @@
     'name': 'Events Management',
     'version': '16.0.4.0.0',
     'category':'Event Management',
+    'sequence':'1',
     'summary': 'Managing online events and booking events',
     'description': 'Managing online events and booking events',
     'depends': [
@@ -18,7 +19,11 @@
         'views/catering.xml',
         'data/sequence.xml',
         'views/catering_menu.xml',
-        'data/catering_menu_data.xml'
+        'data/catering_menu_data.xml',
+
+        'wizards/event_reporting.xml',
+        'report/report_event.xml',
+        'report/report_templete.xml',
 
     ],
     'installable': True,

@@ -9,3 +9,5 @@ class EventManagement(models.Model):
     name = fields.Char('Event Type:')
     code = fields.Char('Code:')
     image = fields.Binary('Image:')
+
+

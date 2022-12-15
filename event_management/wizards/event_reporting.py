@@ -6,8 +6,8 @@ from odoo import models, fields
 class EventReport(models.TransientModel):
     _name = 'event.report'
 
-    from_date = fields.Date('From Date')
-    to_date = fields.Date('To Date')
+    from_date = fields.Date('Date From', required=True)
+    to_date = fields.Date('Date To', required=True)
     event_type_id = fields.Many2one('event.property')
     is_catering = fields.Boolean('Include catering')
 
@@ -15,4 +15,4 @@ class EventReport(models.TransientModel):
         data = {
             'form': self.read()[0]
         }
-        return self.env.ref('event_management.action_report_event').report_action(self)
+        return self.env.ref('event_management.action_report_event').report_action(self, data=data)

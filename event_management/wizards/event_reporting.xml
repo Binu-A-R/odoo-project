@@ -8,7 +8,7 @@
                 <group>
                     <field name="from_date"/>
                     <field name="to_date"/>
-                    <field name="event_type_id"/>
+                    <field name="event_type_id" options="{'no_create': True}"/>
                     <field name="is_catering"/>
                 </group>
                 <footer>
@@ -28,7 +28,8 @@
         <field name="target">new</field>
     </record>
 
-    <menuitem id="event_report_menu_action" sequence="3" name="Report" parent="event_menu_root"
+    <menuitem id="event_report_menu_action" sequence="3" name="Report" parent="event_menu_root"/>
+    <menuitem id="event_report_sub_menu_action" name="PDF Report" parent="event_report_menu_action"
               action="event_report_wizard_action"/>
 
 </odoo>

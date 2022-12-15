@@ -1,10 +1,50 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-    <templete id=" report_event">
-        <t call="web.html_container">
-            <t call="web.external_layout">
-                <h1>Events</h1>
+    <template id="report_event">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <div class="oe_structure"/>
+                    <div class="text-center">
+                        <h2 style="font-size:30px">Event Management</h2>
+                    </div>
+                    <div>
+                        Date:
+                        <span t-esc="time.strftime('%d-%m-%Y')"/>
+                    </div>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th name="th_sl_no" class="text-left">
+                                    <span>Sl.No</span>
+                                </th>
+                                <th name="th_event" class="text-left">
+                                    <span>Event Name</span>
+                                </th>
+                                <th name="th_event_type" class="text-left">
+                                    <span>Event Type</span>
+                                </th>
+                                <th name="th_customer" class="text-left">
+                                    <span>Customer</span>
+                                </th>
+                                <th name="th_event_booking_date" class="text-left">
+                                    <span>Booking date</span>
+                                </th>
+                                <th name="th_status" class="text-left">
+                                    <span>Status</span>
+                                </th>
+                                <th name="th_total" class="text-left">
+                                    <span>Total amount</span>
+                                </th>
+                            </tr>
+
+                        </thead>
+                    </table>
+
+                </div>
             </t>
         </t>
-    </templete>
+    </template>
+
 </odoo>

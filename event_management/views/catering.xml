@@ -119,7 +119,7 @@
                             </page>
                         </notebook>
                         <group style="margin-left:1100px">
-                                <field name="grand_total"  string="Grand total:" decoration-bf="1" attrs="{'invisible':[('is_beverages','=',False),
+                                <field name="grand_total" widget="monetary" string="Grand total:" decoration-bf="1" attrs="{'invisible':[('is_beverages','=',False),
                                 ('is_snack_drinks','=',False),('is_dinner','=',False),('is_lunch','=',False),('is_break_fast','=',False),('is_welcome_drink','=',False)]}"/>
                         </group>
                    </sheet>
@@ -139,6 +139,6 @@
                 </tree>
             </field>
     </record>
-    <menuitem id="catering_menu_action" sequence="1" name ="Catering" parent="event_menu_root" action="catering_action" />
+    <menuitem id="catering_menu_action" sequence="3" name ="Catering" parent="event_menu_root" action="catering_action" />
 
 </odoo>

@@ -68,7 +68,7 @@
             </tree>
         </field>
     </record>
-    <menuitem id="event_booking_menu_action" sequence="3" name="Event Booking" parent="event_menu_root"
+    <menuitem id="event_booking_menu_action" sequence="1" name="Event Booking" parent="event_menu_root"
               action="event_booking_action"/>
 
 </odoo>

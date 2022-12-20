@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="amount5000" model="approval_block.approval">
+        <field name="amount">5000</field>
+        <field name='name'>Amount limit for amount 5000</field>
+    </record>
+    <record id="amount10000" model="approval_block.approval">
+        <field name="amount">10000</field>
+        <field name='name'>Amount limit for amount 10000</field>
+    </record>
+</odoo>

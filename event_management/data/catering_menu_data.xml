@@ -12,10 +12,28 @@
         <field name="unit_price">50</field>
     </record>
 
-<record id="biriyani" model="catering.menu">
+    <record id="biriyani" model="catering.menu">
         <field name="dish_name">Biriyani</field>
         <field name="category">Lunch</field>
         <field name="unit_price">180</field>
+    </record>
+
+    <record id="porotta" model="catering.menu">
+        <field name="dish_name">Porotto</field>
+        <field name="category">Dinner</field>
+        <field name="unit_price">12</field>
+    </record>
+
+    <record id="lays" model="catering.menu">
+        <field name="dish_name">Lays</field>
+        <field name="category">Snacks and Drinks</field>
+        <field name="unit_price">20</field>
+    </record>
+
+    <record id="beer" model="catering.menu">
+        <field name="dish_name">Beer</field>
+        <field name="category">Beverages</field>
+        <field name="unit_price">140</field>
     </record>
 
 

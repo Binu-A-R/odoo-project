@@ -8,10 +8,30 @@
                     <div class="text-center">
                         <h2 style="font-size:30px">Event Management</h2>
                     </div>
-                    <div>
-                        Date:
-                        <span t-esc="time.strftime('%d-%m-%Y')"/>
-                    </div>
+                    <t t-if="form.get('from_date') and form.get('from_date')">
+                        <div>
+                            From date:
+                            <span t-if="form.get('from_date')">
+                                <span t-esc="form['from_date']"/>
+                            </span>
+                        </div>
+                        <div>
+                            To date:
+                            <span t-if="form.get('to_date')">
+                                <span t-esc="form['to_date']"/>
+                            </span>
+                            <br/>
+                        </div>
+                    </t>
+                    <t t-else=" ">
+                        <div>
+                            Date:
+                            <span t-esc="time.strftime('%d-%m-%Y')"/>
+                            <br/>
+                        </div>
+                    </t>
+                    <br/>
+
 
                     <table class="table">
                         <thead>
@@ -22,24 +42,61 @@
                                 <th name="th_event" class="text-left">
                                     <span>Event Name</span>
                                 </th>
-                                <th name="th_event_type" class="text-left">
-                                    <span>Event Type</span>
-                                </th>
-                                <th name="th_customer" class="text-left">
-                                    <span>Customer</span>
-                                </th>
-                                <th name="th_event_booking_date" class="text-left">
-                                    <span>Booking date</span>
-                                </th>
-                                <th name="th_status" class="text-left">
-                                    <span>Status</span>
-                                </th>
+                                <t t-if="form.get('event_type_id')">
+                                    <th name="th_event_type" class="text-left">
+                                        <span>Event Type</span>
+                                    </th>
+                                </t>
+                                <t t-else=" ">
+                                    <th name="th_customer" class="text-left">
+                                        <span>Customer</span>
+                                    </th>
+                                    <th name="th_event_booking_date" class="text-left">
+                                        <span>Booking date</span>
+                                    </th>
+                                    <th name="th_status" class="text-left">
+                                        <span>Status</span>
+                                    </th>
+                                </t>
                                 <th name="th_total" class="text-left">
                                     <span>Total amount</span>
                                 </th>
                             </tr>
-
                         </thead>
+                        <t t-foreach="event" t-as="line">
+                            <tr>
+                                <td>
+                                    <t t-esc="line_index + 1"/>
+                                </td>
+                                <td>
+                                    <span t-esc="line['event_name']"/>
+                                </td>
+
+                                <t t-if="form.get('event_type_id')">
+                                    <td>
+                                        <span t-esc="line['event_type']"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line['status']"/>
+                                    </td>
+                                </t>
+                                <t t-else=" ">
+                                    <td>
+                                        <span t-esc="line['customer']"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line['booking_date']"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line['status']"/>
+                                    </td>
+                                </t>
+                                <td>
+                                    <span t-esc="line['grand_total']"/>
+                                </td>
+
+                            </tr>
+                        </t>
                     </table>
 
                 </div>

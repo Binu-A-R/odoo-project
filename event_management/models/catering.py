@@ -36,7 +36,7 @@ class Catering(models.Model):
             ('expired', 'Expired'),
         ], default="draft"
     )
-    grand_total = fields.Float(string="Grand total", compute='_compute_grand_total')
+    grand_total = fields.Float(string="Grand total", compute='_compute_grand_total', store =True)
 
     @api.depends('category_welcome_drink_ids.price_subtotal', 'category_break_fast_ids.price_subtotal',
                  'category_lunch_ids.price_subtotal', 'category_dinner_ids.price_subtotal',

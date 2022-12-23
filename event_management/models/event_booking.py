@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import fields, models, api,_
+from odoo import fields, models, api, _
 from datetime import datetime
 
 
@@ -8,7 +8,7 @@ class EventBooking(models.Model):
     _name = "event.booking"
     _description = "Event Booking"
     _inherit = 'mail.thread', 'mail.activity.mixin'
-    event_name = fields.Char(" ", readonly=True, store=True,compute="name_get", default=lambda self: _('New'))
+    event_name = fields.Char(" ", readonly=True, store=True, compute="name_get", default=lambda self: _('New'))
     partner_id = fields.Many2one('res.partner', required=True)
     event_type_id = fields.Many2one('event.property', required=True)
     booking_date = fields.Date("Booking Date")
@@ -18,15 +18,14 @@ class EventBooking(models.Model):
     state = fields.Selection(
         selection=[
             ('draft', 'Draft'),
-            ('catering_done', 'Catering Done'),
+            ('catering done', 'Catering Done'),
             ('confirm', 'Confirmed'),
             ('invoice', 'Invoiced'),
-            ('paid','Paid')
+            ('paid', 'Paid')
 
         ], default="draft"
     )
     invoice_id = fields.Many2one('account.move')
-
 
     def action_confirm(self):
         self.state = 'confirm'
@@ -40,22 +39,23 @@ class EventBooking(models.Model):
             duration = end_date - start_date
             self.duration = str(duration.days)
 
-    @api.depends('event_type_id', 'partner_id','start_date', 'end_date')
+    @api.depends('event_type_id.name', 'event_type_id', 'partner_id.name', 'partner_id', 'start_date', 'end_date')
     def name_get(self):
         sequence = []
 
         for rec in self:
             # print('rec-->',rec)
-            if (self.event_type_id.name and self.partner_id.name and self.start_date and self.end_date):
+            if (rec.event_type_id.name and rec.partner_id.name and rec.start_date and rec.end_date):
                 rec.event_name = str(
                     '%s: %s /%s: %s' % (rec.event_type_id.name, rec.partner_id.name, rec.start_date, rec.end_date))
                 sequence.append(
                     (rec.id, '%s : %s / %s : %s' % (rec.event_type_id.name, rec.partner_id.name, rec.start_date,
                                                     rec.end_date)))
+
         return sequence
 
     def action_catering_service(self):
-        self.state = "catering_done"
+        self.state = "catering done"
         return {
             'name': 'catering',
             'view_mode': 'form',
@@ -83,7 +83,7 @@ class EventBooking(models.Model):
                          {
                              'name': line.menu_id.dish_name,
                              'quantity': line.quantity,
-                                'price_unit': line.unit_price,
+                             'price_unit': line.unit_price,
                              'price_subtotal': line.price_subtotal
                          }))
         for line in rec.category_lunch_ids:
@@ -122,28 +122,29 @@ class EventBooking(models.Model):
                          }))
 
         invoice = self.env['account.move'].create({
-                'move_type': 'out_invoice',
-                'partner_id': self.partner_id.id,
-                'invoice_line_ids': vals,
-                })
+            'move_type': 'out_invoice',
+            'partner_id': self.partner_id.id,
+            'invoice_line_ids': vals,
+        })
 
-        self.invoice_id= invoice.id
+        self.invoice_id = invoice.id
         return {
-                'view_mode': 'form',
-                'res_model': 'account.move',
-                'res_id': invoice.id,
-                'type': 'ir.actions.act_window',
-                'target': 'current',
+            'view_mode': 'form',
+            'res_model': 'account.move',
+            'res_id': invoice.id,
+            'type': 'ir.actions.act_window',
+            'target': 'current',
         }
+
     def action_view_invoice(self):
         return {
-                'type': 'ir.actions.act_window',
-                'name': 'invoice',
-                'view_mode': 'tree',
-                'view_id': self.env.ref('account.view_move_form').id,
-                'res_model': 'account.move',
-                'res_id':self.invoice_id.id,
-                'target': 'current',
+            'type': 'ir.actions.act_window',
+            'name': 'invoice',
+            'view_mode': 'tree',
+            'view_id': self.env.ref('account.view_move_form').id,
+            'res_model': 'account.move',
+            'res_id': self.invoice_id.id,
+            'target': 'current',
 
         }
         # return result
@@ -151,26 +152,26 @@ class EventBooking(models.Model):
     def action_view_catering(self):
         event = self.env['catering'].search([('event_id', '=', self.id)])
         # event_id = event
-        for rec in event:
-            return {
-                    'type': 'ir.actions.act_window',
-                    'name': 'catering',
-                    'view_mode': 'form',
-                    'res_model': 'catering',
-                    'res_id':event.id,
-                    'target': 'current',
-                    'context': {'default_event_id': event.id},
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'catering',
+            'view_mode': 'form',
+            'res_model': 'catering',
+            'res_id': event.id,
+            'target': 'current',
+            'context': {'default_event_id': event.id},
 
-            }
+        }
+
 
 class EventBookingInvoice(models.Model):
     _inherit = 'account.move'
 
     def action_register_payment(self):
-        res = super(EventBookingInvoice,self).action_register_payment()
+        res = super(EventBookingInvoice, self).action_register_payment()
         if res:
-            self.payment_state ='paid'
-            state=self.env['event.booking'].search([('invoice_id', '=', self.id)])
-            print('id =>',self.id)
-            print('state =>',state)
+            self.payment_state = 'paid'
+            state = self.env['event.booking'].search([('invoice_id', '=', self.id)])
+            print('id =>', self.id)
+            print('state =>', state)
             state.write({'state': 'paid'})

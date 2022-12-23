@@ -10,6 +10,7 @@
                     <field name="to_date"/>
                     <field name="event_type_id" options="{'no_create': True}"/>
                     <field name="is_catering"/>
+<!--                    <field name="state"/>-->
                 </group>
                 <footer>
                     <button name="print_report" string="Print" type="object" class="btn-primary"/>

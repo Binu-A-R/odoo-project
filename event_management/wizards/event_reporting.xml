@@ -13,7 +13,8 @@
 <!--                    <field name="state"/>-->
                 </group>
                 <footer>
-                    <button name="print_report" string="Print" type="object" class="btn-primary"/>
+                    <button name="print_report" string="Print PDF" type="object" class="btn-primary"/>
+                    <button name="print_xlsx_report" string="Print XLSX" type="object" class="btn-primary"/>
 
                 </footer>
             </form>
@@ -29,8 +30,8 @@
         <field name="target">new</field>
     </record>
 
-    <menuitem id="event_report_menu_action" sequence="3" name="Report" parent="event_menu_root"/>
-    <menuitem id="event_report_sub_menu_action" name="PDF Report" parent="event_report_menu_action"
+    <menuitem id="event_report_menu_action" sequence="3" name="Reporting" parent="event_menu_root"/>
+    <menuitem id="event_report_sub_menu_action" name="Report" parent="event_report_menu_action"
               action="event_report_wizard_action"/>
 
 </odoo>

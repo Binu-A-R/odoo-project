@@ -18,7 +18,7 @@ class EventBooking(models.Model):
     state = fields.Selection(
         selection=[
             ('draft', 'Draft'),
-            ('catering done', 'Catering Done'),
+            ('catering_done', 'Catering Done'),
             ('confirm', 'Confirmed'),
             ('invoice', 'Invoiced'),
             ('paid', 'Paid')
@@ -55,7 +55,7 @@ class EventBooking(models.Model):
         return sequence
 
     def action_catering_service(self):
-        self.state = "catering done"
+        self.state = "catering_done"
         return {
             'name': 'catering',
             'view_mode': 'form',

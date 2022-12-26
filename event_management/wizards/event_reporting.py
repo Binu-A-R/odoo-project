@@ -25,7 +25,7 @@ class EventReport(models.TransientModel):
                    FROM event_property AS ep 
                    INNER JOIN event_booking AS eb ON eb.event_type_id = ep.id 
                    INNER JOIN res_partner AS rp ON eb.partner_id = rp.id 
-                   INNER JOIN catering AS c ON c.id = eb.id
+                   INNER JOIN catering AS c ON c.event_id = eb.id
                    INNER JOIN catering_line AS cl ON c.id = cl.welcome_drinks_menu_id OR cl.break_fast_menu_id = c.id 
                         OR cl.dinner_menu_id = c.id OR cl.lunch_menu_id = c.id OR cl.snacks_drink_menu_id = c.id 
                         OR cl.beverages_menu_id = c.id
@@ -55,12 +55,14 @@ class EventReport(models.TransientModel):
         for rec in event:
             if rec['state'] == 'draft':
                 value = "Draft"
-            elif rec['state'] == 'catering done':
+            elif rec['state'] == 'catering_done':
                 value = "Catering Done"
             elif rec['state'] == 'confirm':
                 value = "Confirmed"
             elif rec['state'] == 'invoice':
                 value = "Invoiced"
+            elif rec['state'] == 'paid':
+                value = "Paid"
 
             print('value---->', value)
             if {'event_name': rec['event_name'], 'event_type': rec['event_type'], 'customer': rec['customer'],
@@ -87,3 +89,6 @@ class EventReport(models.TransientModel):
         }
         print('data ---->', data)
         return self.env.ref('event_management.action_report_event').report_action(self, data=data)
+
+    def xlsx_report(self):
+        print('print excel')

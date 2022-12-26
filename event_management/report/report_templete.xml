@@ -8,27 +8,59 @@
                     <div class="text-center">
                         <h2 style="font-size:30px">Event Management</h2>
                     </div>
-                    <t t-if="form.get('from_date') and form.get('from_date')">
-                        <div>
-                            From date:
-                            <span t-if="form.get('from_date')">
-                                <span t-esc="form['from_date']"/>
-                            </span>
-                        </div>
-                        <div>
-                            To date:
-                            <span t-if="form.get('to_date')">
-                                <span t-esc="form['to_date']"/>
-                            </span>
-                            <br/>
-                        </div>
+
+                    <t t-if="form.get('from_date')">
+                        <t t-if="form.get('to_date')">
+
+                            <div>
+                                From date:
+                                <span t-if="form.get('from_date')">
+                                    <span t-esc="form['from_date']"/>
+                                </span>
+                            </div>
+                            <div>
+                                To date:
+                                <span t-if="form.get('to_date')">
+                                    <span t-esc="form['to_date']"/>
+                                </span>
+                                <br/>
+                            </div>
+                        </t>
+
+                        <t t-else=" ">
+                            <div>
+                                Date:
+                                <span t-esc="time.strftime('%d-%m-%Y')"/>
+                                <br/>
+                            </div>
+                        </t>
                     </t>
-                    <t t-else=" ">
-                        <div>
-                            Date:
-                            <span t-esc="time.strftime('%d-%m-%Y')"/>
-                            <br/>
-                        </div>
+                    <br/>
+                    <t t-if="form.get('to_date')">
+                        <t t-if="form.get('from_date')">
+
+                            <div>
+                                From date:
+                                <span t-if="form.get('from_date')">
+                                    <span t-esc="form['from_date']"/>
+                                </span>
+                            </div>
+                            <div>
+                                To date:
+                                <span t-if="form.get('to_date')">
+                                    <span t-esc="form['to_date']"/>
+                                </span>
+                                <br/>
+                            </div>
+                        </t>
+
+                        <t t-else=" ">
+                            <div>
+                                Date:
+                                <span t-esc="time.strftime('%d-%m-%Y')"/>
+                                <br/>
+                            </div>
+                        </t>
                     </t>
                     <br/>
 
@@ -124,7 +156,7 @@
                                         <span>Item</span>
                                     </th>
 
-                                    <th name="th_category" class="text-center" >
+                                    <th name="th_category" class="text-center">
                                         <span>Category</span>
                                     </th>
 
@@ -150,54 +182,54 @@
                                         <tr>
                                             <t t-if="form.get('event_type_id')">
 
-                                            <td>
-                                                <span t-esc="lines['dish_name']"/>
-                                            </td>
+                                                <td>
+                                                    <span t-esc="lines['dish_name']"/>
+                                                </td>
 
-                                            <td>
-                                                <span t-esc="lines['category']"/>
-                                            </td>
+                                                <td>
+                                                    <span t-esc="lines['category']"/>
+                                                </td>
 
-                                            <td>
-                                                <span t-esc="lines['description']"/>
-                                            </td>
+                                                <td>
+                                                    <span t-esc="lines['description']"/>
+                                                </td>
 
-                                            <td>
-                                                <span t-esc="lines['quantity']"/>
-                                            </td>
+                                                <td>
+                                                    <span t-esc="lines['quantity']"/>
+                                                </td>
 
-                                            <td>
-                                                <span t-esc="lines['unit_price']"/>
-                                            </td>
+                                                <td>
+                                                    <span t-esc="lines['unit_price']"/>
+                                                </td>
 
-                                            <td>
-                                                <span t-esc="lines['price_subtotal']"/>
-                                            </td>
+                                                <td>
+                                                    <span t-esc="lines['price_subtotal']"/>
+                                                </td>
                                             </t>
                                             <t t-else=" ">
                                                 <td>
-                                                <span t-esc="lines['dish_name']"/>
-                                            </td>
+                                                    <span t-esc="lines['dish_name']"/>
+                                                </td>
 
-                                            <td>
-                                                <span t-esc="lines['category']"/>
-                                            </td>
+                                                <td>
+                                                    <span t-esc="lines['category']"/>
+                                                </td>
 
-                                            <td colspan="2">
-                                                <span t-esc="lines['description']"/>
-                                            </td>
+                                                <td colspan="2">
+                                                    <span t-esc="lines['description']"/>
+                                                </td>
 
-                                            <td>
-                                                <span t-esc="lines['quantity']"/>
-                                            </td>
+                                                <td>
+                                                    <span t-esc="lines['quantity']"/>
+                                                </td>
 
-                                            <td>
-                                                <span t-esc="lines['unit_price']"/>
-                                            </td>
+                                                <td>
+                                                    <span t-esc="lines['unit_price']"/>
+                                                </td>
 
-                                            <td>
-                                                <span t-esc="lines['price_subtotal']"/>
-                                            </td>
+                                                <td>
+                                                    <span t-esc="lines['price_subtotal']"/>
+                                                </td>
                                             </t>
 
                                         </tr>

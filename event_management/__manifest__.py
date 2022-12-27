@@ -1,14 +1,14 @@
 {
     'name': 'Events Management',
     'version': '16.0.4.0.0',
-    'category':'Event Management',
-    'sequence':'1',
+    'category': 'Event Management',
+    'sequence': '1',
     'summary': 'Managing online events and booking events',
     'description': 'Managing online events and booking events',
     'depends': [
-        'base','mail','account_payment'
-     ],
-    'data':[
+        'base', 'mail', 'account_payment'
+    ],
+    'data': [
         'security/ir.model.access.csv',
         'views/event_views.xml',
         'views/event_booking.xml',
@@ -20,13 +20,18 @@
         'data/sequence.xml',
         'views/catering_menu.xml',
         'data/catering_menu_data.xml',
-
         'wizards/event_reporting.xml',
         'report/report_event.xml',
         'report/report_templete.xml',
-
     ],
-    'installable': True,
-    'application': True
+    'assets': {
+        'web.assets_backend': [
+            'event_management/static/src/js/action_manager.js',
+        ],
+    },
+
+
+'installable': True,
+'application': True
 
 }

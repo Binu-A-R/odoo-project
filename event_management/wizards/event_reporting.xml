@@ -10,11 +10,11 @@
                     <field name="to_date"/>
                     <field name="event_type_id" options="{'no_create': True}"/>
                     <field name="is_catering"/>
-<!--                    <field name="state"/>-->
                 </group>
                 <footer>
                     <button name="print_report" string="Print PDF" type="object" class="btn-primary"/>
-                    <button name="print_xlsx_report" string="Print XLSX" type="object" class="btn-primary"/>
+                    <button name="xlsx_report" string="Print XLSX" type="object" class="btn-primary"/>
+                    <button name="cancel" special="cancel" string="cancel" type="object" class="btn-secondary"/>
 
                 </footer>
             </form>
@@ -22,7 +22,7 @@
     </record>
 
     <record id="event_report_wizard_action" model="ir.actions.act_window">
-        <field name="name">PDF report</field>
+        <field name="name">Report</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">event.report</field>
         <field name="view_mode">form</field>

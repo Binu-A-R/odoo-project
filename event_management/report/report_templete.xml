@@ -62,6 +62,13 @@
                             </div>
                         </t>
                     </t>
+                    <t t-else=" ">
+                        <div>
+                            Date:
+                            <span t-esc="time.strftime('%d-%m-%Y')"/>
+                            <br/>
+                        </div>
+                    </t>
                     <br/>
 
                     <table class="table">

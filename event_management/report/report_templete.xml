@@ -80,12 +80,8 @@
                                 <th name="th_event" class="text-left" colspan="2">
                                     <span>Event Name</span>
                                 </th>
+
                                 <t t-if="form.get('event_type_id')">
-                                    <th name="th_event_type" class="text-left" colspan="2">
-                                        <span>Event Type</span>
-                                    </th>
-                                </t>
-                                <t t-else=" ">
                                     <th name="th_customer" class="text-left">
                                         <span>Customer</span>
                                     </th>
@@ -94,6 +90,11 @@
                                     </th>
                                     <th name="th_status" class="text-left">
                                         <span>Status</span>
+                                    </th>
+                                </t>
+                                <t t-else=" ">
+                                    <th name="th_event_type" class="text-left" colspan="2">
+                                        <span>Event Type</span>
                                     </th>
                                 </t>
                                 <th name="th_total" class="text-left">
@@ -111,11 +112,6 @@
                                 </td>
 
                                 <t t-if="form.get('event_type_id')">
-                                    <td colspan="2">
-                                        <span t-esc="line['event_type']"/>
-                                    </td>
-                                </t>
-                                <t t-else=" ">
                                     <td>
                                         <span t-esc="line['customer']"/>
                                     </td>
@@ -126,6 +122,12 @@
                                         <span t-esc="line['state']"/>
                                     </td>
                                 </t>
+                                <t t-else=" ">
+                                    <td colspan="2">
+                                        <span t-esc="line['event_type']"/>
+                                    </td>
+                                </t>
+
                                 <td>
                                     <span t-esc="line['grand_total']"/>
                                 </td>
@@ -247,22 +249,23 @@
                         </t>
                         <thead>
                             <tr>
+
                                 <t t-if="form.get('event_type_id')">
+                                    <th colspan="6">
+                                        <span class="text-right">Total :</span>
+
+                                    </th>
+                                    <td colspan="1">
+                                        <span t-esc='total'/>
+                                    </td>
+                                </t>
+                                <t t-else=" ">
 
                                     <th colspan="5">
                                         <span class="text-right">Total :</span>
 
                                     </th>
                                     <td colspan="2">
-                                        <span t-esc='total'/>
-                                    </td>
-                                </t>
-                                <t t-else=" ">
-                                    <th colspan="6">
-                                        <span class="text-right">Total :</span>
-
-                                    </th>
-                                    <td colspan="1">
                                         <span t-esc='total'/>
                                     </td>
                                 </t>

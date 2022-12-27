@@ -19,7 +19,7 @@
     </record>
 
     <record id="porotta" model="catering.menu">
-        <field name="dish_name">Porotto</field>
+        <field name="dish_name">Porotta</field>
         <field name="category">Dinner</field>
         <field name="unit_price">12</field>
     </record>

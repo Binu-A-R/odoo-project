@@ -89,6 +89,7 @@ class EventReport(models.TransientModel):
             'total': total,
             'val': val,
         }
+        print('data')
         print('data ---->', data)
         return self.env.ref('event_management.action_report_event').report_action(self, data=data)
 
@@ -174,23 +175,40 @@ class EventReport(models.TransientModel):
         print(data['event'])
         bold = workbook.add_format({'align': 'center', 'bold': True, 'font_color': 'blue'})
         sheet.write('B12', 'Sl.NO', bold)
-        if data['event_type_id']:
-            sheet.merge_range('C12:J12', 'EVENT NAME', bold)
-            sheet.merge_range('K12:O12', 'EVENT TYPE', bold)
-            sheet.merge_range('P12:R12', 'TOTAL AMOUNT', bold)
 
-        else:
+        if data['event_type_id']:
             sheet.merge_range('C12:I12', 'EVENT NAME', bold)
             sheet.merge_range('J12:K12', 'CUSTOMER', bold)
             sheet.merge_range('L12:M12', 'BOOKING DATE', bold)
             sheet.merge_range('N12:O12', 'STATUS', bold)
             sheet.merge_range('P12:R12', 'TOTAL AMOUNT', bold)
 
+        else:
+            sheet.merge_range('C12:J12', 'EVENT NAME', bold)
+            sheet.merge_range('K12:O12', 'EVENT TYPE', bold)
+            sheet.merge_range('P12:R12', 'TOTAL AMOUNT', bold)
+
         index = 1
         col = 0
-        row = 14
+        row = 13
         total = 0
+        val = []
+        value = ' '
         for rec in data['event']:
+
+            if {'event_name': rec['event_name'], 'event_type': rec['event_type'], 'customer': rec['customer'],
+                'booking_date': rec['booking_date'], 'state': rec['state'], 'grand_total': rec['grand_total']} \
+                    in val:
+                pass
+            else:
+                val.append({'event_name': rec['event_name'],
+                            'event_type': rec['event_type'],
+                            'customer': rec['customer'],
+                            'booking_date': rec['booking_date'],
+                            'state': rec['state'],
+                            'grand_total': rec['grand_total']
+                            })
+        for rec in val:
             print('loop--->:', rec)
             if rec['state'] == 'draft':
                 value = "Draft"
@@ -206,20 +224,20 @@ class EventReport(models.TransientModel):
             total += rec['grand_total']
             print('grand_total------>', total)
             sheet.write(row, col + 1, index, align)
-            if data['event_type_id']:
-                sheet.merge_range(row, col + 2, row, col + 10, rec['event_name'], txt)
-                sheet.merge_range(row, col + 11, row, col + 14, rec['event_type'], txt)
-                sheet.merge_range(row, col + 15, row, col + 17, rec['grand_total'], align)
 
-            else:
+            if data['event_type_id']:
                 sheet.merge_range(row, col + 2, row, col + 8, rec['event_name'], txt)
                 sheet.merge_range(row, col + 9, row, col + 10, rec['customer'], txt)
                 sheet.merge_range(row, col + 11, row, col + 12, rec['booking_date'], txt)
                 sheet.merge_range(row, col + 13, row, col + 14, value, txt)
                 sheet.merge_range(row, col + 15, row, col + 17, rec['grand_total'], align)
+            else:
+                sheet.merge_range(row, col + 2, row, col + 10, rec['event_name'], txt)
+                sheet.merge_range(row, col + 11, row, col + 14, rec['event_type'], txt)
+                sheet.merge_range(row, col + 15, row, col + 17, rec['grand_total'], align)
 
             index += 1
-            row +=  1
+            row += 1
         sheet.write(row + 1, col + 14, 'TOTAL', total_style)
         sheet.merge_range(row + 1, col + 15, row + 1, col + 17, total, total_style)
 

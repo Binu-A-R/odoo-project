@@ -77,7 +77,7 @@
                                 <th name="th_sl_no" class="text-left">
                                     <span>Sl.No</span>
                                 </th>
-                                <th name="th_event" class="text-left" colspan="2">
+                                <th name="th_event" class="text-left" colspan="3">
                                     <span>Event Name</span>
                                 </th>
 
@@ -93,7 +93,7 @@
                                     </th>
                                 </t>
                                 <t t-else=" ">
-                                    <th name="th_event_type" class="text-left" colspan="2">
+                                    <th name="th_event_type" class="text-left" colspan="3">
                                         <span>Event Type</span>
                                     </th>
                                 </t>
@@ -107,7 +107,7 @@
                                 <td class="text-center">
                                     <t t-esc="line_index + 1"/>
                                 </td>
-                                <td colspan="2">
+                                <td colspan="3">
                                     <span t-esc="line['event_name']"/>
                                 </td>
 
@@ -115,7 +115,7 @@
                                     <td>
                                         <span t-esc="line['customer']"/>
                                     </td>
-                                    <td colspan="1">
+                                    <td>
                                         <span t-esc="line['booking_date']"/>
                                     </td>
                                     <td>
@@ -123,7 +123,7 @@
                                     </td>
                                 </t>
                                 <t t-else=" ">
-                                    <td colspan="2">
+                                    <td colspan="3">
                                         <span t-esc="line['event_type']"/>
                                     </td>
                                 </t>
@@ -135,8 +135,7 @@
 
                             <t t-if="form.get('is_catering')">
                                 <t t-if="form.get('event_type_id')">
-
-                                    <th name="th_dish_name" class="text-center">
+                                    <th name="th_dish_name" class="text-center" >
                                         <span>Item</span>
                                     </th>
 
@@ -144,7 +143,7 @@
                                         <span>Category</span>
                                     </th>
 
-                                    <th name="th_description" class="text-center">
+                                    <th name="th_description" class="text-center" colspan="3">
                                         <span>Description</span>
                                     </th>
 
@@ -161,6 +160,7 @@
                                     </th>
                                 </t>
                                 <t t-else=" ">
+
                                     <th name="th_dish_name" class="text-center">
                                         <span>Item</span>
                                     </th>
@@ -177,7 +177,7 @@
                                         <span>Quantity</span>
                                     </th>
 
-                                    <th name="th_unit_price" class="text-center">
+                                    <th name="th_unit_price" class="text-center" colspan="2">
                                         <span>Unit Price</span>
                                     </th>
 
@@ -189,6 +189,7 @@
                                 <t t-foreach="event" t-as="lines">
                                     <t t-if="line['event_name'] == lines['event_name']">
                                         <tr>
+
                                             <t t-if="form.get('event_type_id')">
 
                                                 <td>
@@ -199,7 +200,7 @@
                                                     <span t-esc="lines['category']"/>
                                                 </td>
 
-                                                <td>
+                                                <td colspan="3">
                                                     <span t-esc="lines['description']"/>
                                                 </td>
 
@@ -216,6 +217,7 @@
                                                 </td>
                                             </t>
                                             <t t-else=" ">
+
                                                 <td>
                                                     <span t-esc="lines['dish_name']"/>
                                                 </td>
@@ -232,7 +234,7 @@
                                                     <span t-esc="lines['quantity']"/>
                                                 </td>
 
-                                                <td>
+                                                <td colspan="2">
                                                     <span t-esc="lines['unit_price']"/>
                                                 </td>
 
@@ -251,7 +253,7 @@
                             <tr>
 
                                 <t t-if="form.get('event_type_id')">
-                                    <th colspan="6">
+                                    <th colspan="7">
                                         <span class="text-right">Total :</span>
 
                                     </th>
@@ -261,7 +263,7 @@
                                 </t>
                                 <t t-else=" ">
 
-                                    <th colspan="5">
+                                    <th colspan="7">
                                         <span class="text-right">Total :</span>
 
                                     </th>

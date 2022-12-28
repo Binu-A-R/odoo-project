@@ -164,7 +164,7 @@ class EventReport(models.TransientModel):
                                            'bold': True, 'font_color': 'black'})
         head_style = workbook.add_format({'font_size': '10px', 'align': 'center', 'bold': True, 'font_color': 'black'})
         head_total = workbook.add_format({'align': 'center', 'border': True, 'bold': True, 'font_size': '12px',
-                                    'font_color': 'red'})
+                                          'font_color': 'red'})
 
         if data['from_date'] and data['to_date']:
             sheet.write('B6', 'From:', cell_format)

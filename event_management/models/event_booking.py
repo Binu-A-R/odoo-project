@@ -45,7 +45,7 @@ class EventBooking(models.Model):
 
         for rec in self:
             # print('rec-->',rec)
-            if (rec.event_type_id.name and rec.partner_id.name and rec.start_date and rec.end_date):
+            if rec.event_type_id.name and rec.partner_id.name and rec.start_date and rec.end_date:
                 rec.event_name = str(
                     '%s: %s /%s: %s' % (rec.event_type_id.name, rec.partner_id.name, rec.start_date, rec.end_date))
                 sequence.append(
@@ -150,16 +150,17 @@ class EventBooking(models.Model):
         # return result
 
     def action_view_catering(self):
-        event = self.env['catering'].search([('event_id', '=', self.id)])
+        # event = self.env['catering'].search([('event_id', '=', self.id)])
         # event_id = event
         return {
             'type': 'ir.actions.act_window',
             'name': 'catering',
-            'view_mode': 'form',
+            'view_mode': 'tree,form',
             'res_model': 'catering',
-            'res_id': event.id,
+            # 'res_id': event.id,
             'target': 'current',
-            'context': {'default_event_id': event.id},
+            'context': {'default_event_id': self.id},
+            'domain': [('event_id', '=', self.id)]
 
         }
 

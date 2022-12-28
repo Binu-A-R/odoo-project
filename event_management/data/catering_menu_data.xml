@@ -35,6 +35,4 @@
         <field name="category">Beverages</field>
         <field name="unit_price">140</field>
     </record>
-
-
 </odoo>

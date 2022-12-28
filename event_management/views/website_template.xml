@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <template id="website_page_test" name="Event Page">
+            <t t-call="website.layout">
+                <h1 align="center">Event Page</h1>
+                <div class="col-md-12">
+                    <form action="/event_booking/form/submit">
+
+                    </form>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

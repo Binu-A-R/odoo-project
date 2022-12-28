@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields
+from odoo.exceptions import ValidationError
 from odoo.tools import date_utils
 import io
 import json
@@ -117,6 +118,12 @@ class EventReport(models.TransientModel):
             query += """ and eb.start_date > '%s'""" % self.from_date
             print('event_type-->', query)
             print('start_date-->', self.from_date)
+
+        if self.from_date and self.to_date:
+            if """ and eb.start_date < '%s'""" % self.from_date or """ and eb.end_date > '%s'""" % self.to_date:
+                # query += """ and eb.start_date < '%s'""" % self.from_date
+                raise ValidationError("**** From date greater than To date.****")
+
         if self.to_date:
             query += """ and eb.end_date < '%s'""" % self.to_date
             print('event_type-->', query)
@@ -130,6 +137,7 @@ class EventReport(models.TransientModel):
             'from_date': self.from_date,
             'to_date': self.to_date,
             'event_type_id': self.event_type_id.name,
+            'is_catering': self.is_catering,
             'event': event
         }
         print('data ---->', data)
@@ -146,7 +154,7 @@ class EventReport(models.TransientModel):
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         sheet = workbook.add_worksheet()
         cell_format = workbook.add_format({'font_size': '12px'})
-        head = workbook.add_format({'align': 'center', 'border': True,  'bold': True, 'font_size': '20px',
+        head = workbook.add_format({'align': 'center', 'border': True, 'bold': True, 'font_size': '20px',
                                     'font_color': 'red'})
         txt = workbook.add_format({'font_size': '10px'})
         align = workbook.add_format({'font_size': '10px', 'align': 'center'})
@@ -154,12 +162,27 @@ class EventReport(models.TransientModel):
         current_date = str(date.today())
         total_style = workbook.add_format({'font_size': '12px', 'align': 'center', 'border': True,
                                            'bold': True, 'font_color': 'black'})
+        head_style = workbook.add_format({'font_size': '10px', 'align': 'center', 'bold': True, 'font_color': 'black'})
+        head_total = workbook.add_format({'align': 'center', 'border': True, 'bold': True, 'font_size': '12px',
+                                    'font_color': 'red'})
 
         if data['from_date'] and data['to_date']:
             sheet.write('B6', 'From:', cell_format)
-            sheet.merge_range('C6:D6', data['from_date'], txt)
+            sheet.merge_range('C6:D6', data['from_date'], cell_format)
             sheet.write('B8', 'To:', cell_format)
-            sheet.merge_range('C8:D8', data['to_date'], txt)
+            sheet.merge_range('C8:D8', data['to_date'], cell_format)
+
+        elif data['from_date']:
+            sheet.write('B6', 'From:', cell_format)
+            sheet.merge_range('D6:E6', data['from_date'], cell_format)
+            sheet.merge_range('B8:C8', 'Printed Date:', cell_format)
+            sheet.merge_range('D8:E8', current_date, cell_format)
+
+        elif data['to_date']:
+            sheet.write('B6', 'To:', cell_format)
+            sheet.merge_range('D6:E6', data['to_date'], cell_format)
+            sheet.merge_range('B8:C8', 'Printed Date:', cell_format)
+            sheet.merge_range('D8:E8', current_date, cell_format)
 
         else:
             sheet.write('B7', 'Date:', cell_format)
@@ -184,13 +207,13 @@ class EventReport(models.TransientModel):
             sheet.merge_range('P12:R12', 'TOTAL AMOUNT', bold)
 
         else:
-            sheet.merge_range('C12:J12', 'EVENT NAME', bold)
-            sheet.merge_range('K12:O12', 'EVENT TYPE', bold)
+            sheet.merge_range('C12:K12', 'EVENT NAME', bold)
+            sheet.merge_range('L12:O12', 'EVENT TYPE', bold)
             sheet.merge_range('P12:R12', 'TOTAL AMOUNT', bold)
 
         index = 1
         col = 0
-        row = 13
+        row = 12
         total = 0
         val = []
         value = ' '
@@ -208,38 +231,60 @@ class EventReport(models.TransientModel):
                             'state': rec['state'],
                             'grand_total': rec['grand_total']
                             })
-        for rec in val:
-            print('loop--->:', rec)
-            if rec['state'] == 'draft':
+        for record in val:
+            print('loop--->:', record)
+            if record['state'] == 'draft':
                 value = "Draft"
-            elif rec['state'] == 'catering_done':
+            elif record['state'] == 'catering_done':
                 value = "Catering Done"
-            elif rec['state'] == 'confirm':
+            elif record['state'] == 'confirm':
                 value = "Confirmed"
-            elif rec['state'] == 'invoice':
+            elif record['state'] == 'invoice':
                 value = "Invoiced"
-            elif rec['state'] == 'paid':
+            elif record['state'] == 'paid':
                 value = "Paid"
 
-            total += rec['grand_total']
+            total += record['grand_total']
             print('grand_total------>', total)
             sheet.write(row, col + 1, index, align)
 
             if data['event_type_id']:
-                sheet.merge_range(row, col + 2, row, col + 8, rec['event_name'], txt)
-                sheet.merge_range(row, col + 9, row, col + 10, rec['customer'], txt)
-                sheet.merge_range(row, col + 11, row, col + 12, rec['booking_date'], txt)
+                sheet.merge_range(row, col + 2, row, col + 8, record['event_name'], txt)
+                sheet.merge_range(row, col + 9, row, col + 10, record['customer'], txt)
+                sheet.merge_range(row, col + 11, row, col + 12, record['booking_date'], txt)
                 sheet.merge_range(row, col + 13, row, col + 14, value, txt)
-                sheet.merge_range(row, col + 15, row, col + 17, rec['grand_total'], align)
+                sheet.merge_range(row, col + 15, row, col + 17, record['grand_total'], align)
             else:
-                sheet.merge_range(row, col + 2, row, col + 10, rec['event_name'], txt)
-                sheet.merge_range(row, col + 11, row, col + 14, rec['event_type'], txt)
-                sheet.merge_range(row, col + 15, row, col + 17, rec['grand_total'], align)
+                sheet.merge_range(row, col + 2, row, col + 10, record['event_name'], txt)
+                sheet.merge_range(row, col + 11, row, col + 14, record['event_type'], txt)
+                sheet.merge_range(row, col + 15, row, col + 17, record['grand_total'], head_style)
 
             index += 1
             row += 1
+            if data['is_catering']:
+                sheet.merge_range(row, col + 2, row, col + 4, 'Item', head_style)
+                sheet.merge_range(row, col + 5, row, col + 7, 'Category', head_style)
+                sheet.merge_range(row, col + 8, row, col + 10, 'Description', head_style)
+                sheet.merge_range(row, col + 11, row, col + 12, 'Quantity', head_style)
+                sheet.merge_range(row, col + 13, row, col + 14, 'Unit Price', head_style)
+                sheet.merge_range(row, col + 15, row, col + 17, 'Subtotal', head_style)
+                row += 1
+
+                for line in data['event']:
+                    print('line--->', line)
+                    if line['event_name'] == record['event_name']:
+                        print('result', line['event_name'] == record['event_name'])
+
+                        sheet.merge_range(row, col + 2, row, col + 4, line['dish_name'], txt)
+                        sheet.merge_range(row, col + 5, row, col + 7, line['category'], txt)
+                        sheet.merge_range(row, col + 8, row, col + 10, line['description'], txt)
+                        sheet.merge_range(row, col + 11, row, col + 12, line['quantity'], align)
+                        sheet.merge_range(row, col + 13, row, col + 14, line['unit_price'], align)
+                        sheet.merge_range(row, col + 15, row, col + 17, line['price_subtotal'], align)
+                        row += 1
+                row += 2
         sheet.write(row + 1, col + 14, 'TOTAL', total_style)
-        sheet.merge_range(row + 1, col + 15, row + 1, col + 17, total, total_style)
+        sheet.merge_range(row + 1, col + 15, row + 1, col + 17, total, head_total)
 
         workbook.close()
         output.seek(0)

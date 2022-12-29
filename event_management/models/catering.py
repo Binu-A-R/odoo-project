@@ -27,6 +27,7 @@ class Catering(models.Model):
     category_snack_drinks_ids = fields.One2many('catering.line', 'snacks_drink_menu_id', string="Snacks and Drinks")
     category_beverages_ids = fields.One2many('catering.line', 'beverages_menu_id', string="Beverages")
 
+
     state = fields.Selection(
         selection=[
             ('draft', 'Draft'),
@@ -51,6 +52,7 @@ class Catering(models.Model):
 
     def action_confirm(self):
         self.state = 'confirm'
+
 
     def action_deliver(self):
         self.state = 'deliver'

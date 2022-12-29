@@ -25,6 +25,7 @@
                             <field name="start_date" string="Start Date"/>
                             <field name="end_date" string="End Date"/>
                             <field name="guest"/>
+
                         </group>
                         <group>
                             <field name="is_welcome_drink" string="Welcome drink"/>

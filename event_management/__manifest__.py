@@ -6,7 +6,7 @@
     'summary': 'Managing online events and booking events',
     'description': 'Managing online events and booking events',
     'depends': [
-        'base', 'mail', 'account_payment', 'website'
+        'base', 'mail', 'account_payment', 'website','sale'
     ],
     'data': [
         'security/ir.model.access.csv',

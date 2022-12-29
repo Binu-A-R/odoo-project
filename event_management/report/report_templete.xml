@@ -39,19 +39,8 @@
                     <t t-if="form.get('to_date')">
                         <t t-if="form.get('from_date')">
 
-                            <div>
-                                From date:
-                                <span t-if="form.get('from_date')">
-                                    <span t-esc="form['from_date']"/>
-                                </span>
-                            </div>
-                            <div>
-                                To date:
-                                <span t-if="form.get('to_date')">
-                                    <span t-esc="form['to_date']"/>
-                                </span>
-                                <br/>
-                            </div>
+
+
                         </t>
 
                         <t t-else=" ">
@@ -62,14 +51,7 @@
                             </div>
                         </t>
                     </t>
-                    <t t-else=" ">
-                        <div>
-                            Date:
-                            <span t-esc="time.strftime('%d-%m-%Y')"/>
-                            <br/>
-                        </div>
-                    </t>
-                    <br/>
+
 
                     <table class="table">
                         <thead>

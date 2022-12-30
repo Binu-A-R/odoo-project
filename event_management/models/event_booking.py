@@ -15,8 +15,6 @@ class EventBooking(models.Model):
     start_date = fields.Datetime("Start Date", required=True)
     end_date = fields.Datetime("End Date", required=True)
     duration = fields.Char(string='Duration', compute='onchange_duration_id')
-    sale_id = fields.Many2one("sale.order")
-
     state = fields.Selection(
         selection=[
             ('draft', 'Draft'),
@@ -32,7 +30,6 @@ class EventBooking(models.Model):
     def action_confirm(self):
         self.state = 'confirm'
         self.env['catering'].search([('state', '=', 'draft')]).action_confirm()
-        self.env['sale.order'].search([('state', '=', 'draft')]).action_confirm()
 
     @api.onchange('start_date', 'end_date')
     def onchange_duration_id(self):
@@ -48,7 +45,7 @@ class EventBooking(models.Model):
 
         for rec in self:
             # print('rec-->',rec)
-            if rec.event_type_id.name and rec.partner_id.name and rec.start_date and rec.end_date:
+            if (rec.event_type_id.name and rec.partner_id.name and rec.start_date and rec.end_date):
                 rec.event_name = str(
                     '%s: %s /%s: %s' % (rec.event_type_id.name, rec.partner_id.name, rec.start_date, rec.end_date))
                 sequence.append(
@@ -147,6 +144,7 @@ class EventBooking(models.Model):
             'view_id': self.env.ref('account.view_move_form').id,
             'res_model': 'account.move',
             'res_id': self.invoice_id.id,
+            
             'target': 'current',
 
         }

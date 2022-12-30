@@ -6,7 +6,7 @@
     'summary': 'Managing online events and booking events',
     'description': 'Managing online events and booking events',
     'depends': [
-        'base', 'mail', 'account_payment', 'website','sale'
+        'base', 'mail', 'account_payment',
     ],
     'data': [
         'security/ir.model.access.csv',
@@ -16,7 +16,6 @@
         'data/event_type_data.xml',
         'data/scheduled_action.xml',
         'data/event_service_data.xml',
-        'data/event_website.xml',
         'views/catering.xml',
         'data/sequence.xml',
         'views/catering_menu.xml',
@@ -24,8 +23,7 @@
         'wizards/event_reporting.xml',
         'report/report_event.xml',
         'report/report_templete.xml',
-        'views/website_template.xml'
-
+        # 'views/event_website.xml'
     ],
     'assets': {
         'web.assets_backend': [

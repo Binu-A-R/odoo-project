@@ -25,6 +25,7 @@
                             <field name="start_date" string="Start Date"/>
                             <field name="end_date" string="End Date"/>
                             <field name="guest"/>
+
                         </group>
                         <group>
                             <field name="is_welcome_drink" string="Welcome drink"/>
@@ -68,7 +69,7 @@
                         <page string="Lunch Lines" attrs="{'invisible':[('is_lunch','=',False)]}">
                             <field name="category_lunch_ids" >
                                 <tree editable="bottom">
-                                    <field name="menu_id" string="Item" domain="[('category', '=', 'Lunch')]"/>
+                                        <field name="menu_id" string="Item" domain="[('category', '=', 'Lunch')]"/>
                                     <field name="description" string="Description"/>
                                     <field name="quantity" string="Quantity"/>
                                     <field name ='uom_id' string="UOM"/>

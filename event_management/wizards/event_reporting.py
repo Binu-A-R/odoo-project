@@ -49,6 +49,10 @@ class EventReport(models.TransientModel):
             print('event_type-->', query)
             print('to_date-->', self.to_date)
 
+        if self.from_date and self.to_date:
+            if self.from_date > self.to_date:
+                raise ValidationError("**** From date greater than To date.****")
+
         self.env.cr.execute(query)
         event = self.env.cr.dictfetchall()
         val = []
@@ -120,8 +124,7 @@ class EventReport(models.TransientModel):
             print('start_date-->', self.from_date)
 
         if self.from_date and self.to_date:
-            if """ and eb.start_date < '%s'""" % self.from_date or """ and eb.end_date > '%s'""" % self.to_date:
-                # query += """ and eb.start_date < '%s'""" % self.from_date
+            if self.from_date > self.to_date:
                 raise ValidationError("**** From date greater than To date.****")
 
         if self.to_date:

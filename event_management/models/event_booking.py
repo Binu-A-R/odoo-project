@@ -8,13 +8,14 @@ class EventBooking(models.Model):
     _name = "event.booking"
     _description = "Event Booking"
     _inherit = 'mail.thread', 'mail.activity.mixin'
-    event_name = fields.Char(" ", readonly=True, store=True, compute="name_get", default=lambda self: _('New'))
+    event_name = fields.Char(" ", readonly=True, store=True, compute="name_get")
     partner_id = fields.Many2one('res.partner', required=True)
     event_type_id = fields.Many2one('event.property', required=True)
     booking_date = fields.Date("Booking Date")
     start_date = fields.Datetime("Start Date", required=True)
     end_date = fields.Datetime("End Date", required=True)
     duration = fields.Char(string='Duration', compute='onchange_duration_id')
+
     state = fields.Selection(
         selection=[
             ('draft', 'Draft'),
@@ -45,7 +46,7 @@ class EventBooking(models.Model):
 
         for rec in self:
             # print('rec-->',rec)
-            if (rec.event_type_id.name and rec.partner_id.name and rec.start_date and rec.end_date):
+            if rec.event_type_id.name and rec.partner_id.name and rec.start_date and rec.end_date:
                 rec.event_name = str(
                     '%s: %s /%s: %s' % (rec.event_type_id.name, rec.partner_id.name, rec.start_date, rec.end_date))
                 sequence.append(
@@ -144,7 +145,6 @@ class EventBooking(models.Model):
             'view_id': self.env.ref('account.view_move_form').id,
             'res_model': 'account.move',
             'res_id': self.invoice_id.id,
-            
             'target': 'current',
 
         }

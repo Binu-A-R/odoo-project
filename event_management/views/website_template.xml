@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <data>
-        <template id="website_page" name="Event Page">
+        <template id="website_page" name="Event">
             <t t-call="website.layout">
                 <h1 align="center">Event Management</h1>
                 <br/>
@@ -13,7 +13,7 @@
                                 <!--                                <div class="form-control">-->
 
                                 <label for="event_type">Event Type:</label>
-                                <select name="event_type" class="form-control link-style">
+                                <select name="event" class="form-control link-style">
                                     <t t-foreach="event_type" t-as="rec">
                                         <option t-esc="rec.name" t-att-value="rec.id"/>
                                     </t>
@@ -33,27 +33,16 @@
                                 <br/>
 
                                 <label for="start_date">Start Date:</label>
-                                  <input type="datetime-local" class="form-control" name="start_date" id="start_date"
-                                         data-date-format="YYYY-MM-DDt%H:%M"
+                                <input type="date" class="form-control" name="start_date" id="start_date"
                                        required="true"/>
-
-<!--                                <input id="start_date" type="datetime-local" name="date_time_funeral"-->
-<!--                                       class="form-control o_website_form_datetime" t-att-value="date_time_funeral"-->
-<!--                                       data-date-format="DD.MM.YYYY HH:MM" style="text-align: center;"-->
-<!--                                       autocomplete="off" required="true"/>-->
                                 <br/>
 
                                 <label for="end_date">End Date:</label>
-<!--                                <input id="end_date" type="datetime-local" name="date_time_funeral"-->
-<!--                                       class="form-control o_website_form_datetime" t-att-value="date_time_funeral"-->
-<!--                                       data-date-format="DD.MM.YYYY HH:MM" style="text-align: center;"-->
-<!--                                       autocomplete="off" required="true"/>-->
-
-                                <input type="datetime-local" class="form-control" name="end_date" id="end_date"
-                                       data-date-format="YYYY-MM-DD %H:%M" required="true"/>
+                                <input type="date" class="form-control" name="end_date" id="end_date"
+                                       required="true"/>
                                 <br/>
                             </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="create" class="btn btn-primary">Create</button>
                         </form>
                     </div>
                 </div>
@@ -67,6 +56,129 @@
                         <div class="col-md-12">
                             <div class="alert alert-success">
                                 Event Booking is Successfully Submitted
+                            </div>
+                            <h1 align="center">Catering</h1>
+
+                            <form action="/event_booking/form/submit/catering">
+                                <div class="form-group">
+
+                                    <label for="event">Event:</label>
+                                    <select name="event" class="form-control link-style">
+                                        <t t-foreach="event_type" t-as="rec">
+                                            <option t-esc="rec.event_name" t-att-value="rec.id"/>
+                                        </t>
+                                    </select>
+                                    <!--                                    <select name="event_type" class="form-control link-style">-->
+                                    <!--                                        <option t-esc="booking.event_name"/>-->
+                                    <!--                                    </select>-->
+                                    <br/>
+
+                                    <label for="number_of_guest">Number of guest:</label>
+                                    <input type="number" class="form-control" name="number_of_guest"
+                                           id="number_of_guest" required="true"/>
+                                    <br/>
+                                    <style>
+                                        .section1{
+                                        display: flex;
+                                        gap: 30px 105px
+                                        }
+                                        .section2{
+                                        display: flex;
+                                        gap: 30px 105px
+
+                                        }
+                                    </style>
+                                    <div>
+                                        <div class="section1">
+                                            <div>
+                                                <label for="welcome_drink">Welcome Drink:</label>
+                                                <select name="welcome_drink" multiple='multiple'
+                                                        class="form-control link-style"
+                                                        style="width:300px; height:50px;">
+                                                    <t t-foreach="welcome_drink" t-as="rec">
+                                                        <option t-esc="rec.dish_name"/>
+                                                    </t>
+                                                </select>
+                                                <br/>
+                                            </div>
+
+                                            <div>
+                                                <label for="break_fast">Break Fast:</label>
+                                                <select name="break_fast" multiple='multiple'
+                                                        class="form-control link-style"
+                                                        style="width:300px; height:50px;">
+                                                    <t t-foreach="break_fast" t-as="rec">
+                                                        <option t-esc="rec.dish_name"/>
+                                                    </t>
+                                                </select>
+                                                <br/>
+                                            </div>
+                                            <!---->
+                                            <div>
+                                                <label for="lunch">Lunch:</label>
+                                                <select name="lunch" Multiple=' ' class="form-control link-style"
+                                                        style="width:300px; height:50px;">
+                                                    <t t-foreach="lunch" t-as="rec">
+                                                        <option t-esc="rec.dish_name"/>
+                                                    </t>
+                                                </select>
+                                                <br/>
+                                            </div>
+                                        </div>
+                                        <div class="section2">
+                                            <!---->
+                                            <div>
+                                                <label for="dinner">Dinner:</label>
+                                                <select name="dinner" multiple='multiple'
+                                                        class="form-control link-style"
+                                                        style="width:300px; height:50px;">
+                                                    <t t-foreach="dinner" t-as="rec">
+                                                        <option t-esc="rec.dish_name"/>
+                                                    </t>
+                                                </select>
+                                                <br/>
+                                            </div>
+                                            <div>
+                                                <label for="snack_drinks">Snack and Drinks:</label>
+                                                <select name="snack_drinks" multiple='multiple'
+                                                        class="form-control link-style"
+                                                        style="width:300px; height:50px;">
+                                                    <t t-foreach="snack_drinks" t-as="rec">
+                                                        <option t-esc="rec.dish_name"/>
+                                                    </t>
+                                                </select>
+                                                <br/>
+                                            </div>
+                                            <div>
+                                                <label for="beverages">Beverages:</label>
+                                                <select name="beverages" multiple='multiple'
+                                                        class="form-control link-style"
+                                                        style="width:300px; height:50px;">
+                                                    <t t-foreach="beverages" t-as="rec">
+                                                        <option t-esc="rec.dish_name"/>
+                                                    </t>
+                                                </select>
+                                                <br/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <!--                                <br/>-->
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="tmp_catering_form_success" name="Catering Form Successfully Submitted">
+            <t t-call="website.layout">
+                <div id="wrap">
+                    <div class="container">
+                        <div class="col-md-12">
+                            <div class="alert alert-success">
+                                Catering created successfully.
                             </div>
                         </div>
                     </div>

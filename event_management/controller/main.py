@@ -5,7 +5,7 @@ from odoo.http import content_disposition, request
 
 class XLSXReportController(http.Controller):
     @http.route('/xlsx_reports', type='http', auth='user', methods=['POST'], csrf=False)
-    def get_report_xlsx(self, model, options, output_format, report_name):
+    def get_report_xlsx(self, model, options, output_format, report_name, **kw):
         print("test--->")
         uid = request.session.uid
         report_obj = request.env[model].with_user(uid)

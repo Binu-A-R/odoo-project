@@ -14,6 +14,7 @@ registry.category("ir.actions.report handlers").add("xlsx", async (action) => {
         	data: action.data,
         	success: def.resolve.bind(def),
         	error: (error) => this.call('crash_manager', 'rpc_error', error),
+
         	complete: framework.unblockUI,
     	});
     	return def;

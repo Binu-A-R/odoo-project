@@ -1,26 +1,64 @@
 $(document).ready(function () {
     $('.advanced-select').select2();
-            console.log('start_date-->')
+    $('#end_date').on('change', function(){
+             var start_date = $('#start_date').val();
+             console.log("start date",start_date)
 
-    $(function() {
-            $("#start_date").datepicker();
-            var date1 = $("#start_date")
-            console.log('start_date-mcf->',date1)
 
+             var end_date = $('#end_date').val();
+             console.log("end_date",end_date)
+
+             if (end_date < start_date){
+                 alert('End date should be greater than Start date.');
+                $('#end_date').val('');
+             }
+             console.log("Success: end date  changes")
     });
-     $(function() {
-                $("#end_date").datepicker();
-                var date2 = $("#date2")
-                            console.log('end_date-mcf->',date2)
 
-            });
-             function func() {
-                date1 = new Date(date1.value);
-                date2 = new Date(date2.value);
-                var milli_secs = date1.getTime() - date2.getTime();
-                var days = milli_secs / (1000 * 3600 * 24);
-                console.log('days',days)
-                document.getElementById("duration").innerHTML =
-                Math.round(Math.abs(days));
-}
+    $('#start_date').on('change', function(){
+                 var start_date = $('#start_date').val();
+                  console.log("start date",start_date)
+
+                 var end_date = $('#end_date').val();
+                 console.log("end_date",end_date)
+if(end_date == true){
+                 if (end_date < start_date){
+                     alert('End date should be greater than Start date.');
+                    $('#start_date').val('');
+                 }
+                 console.log("Success: start date  changes")
+   } });
+
+   $(document).ready(function() {
+  $('#start_date').on('change', function(){
+    var startDate = new Date($('#start_date').val());
+                                  console.log("start date",startDate)
+
+    var endDate = new Date($('#end_date').val());
+                                  console.log("end date",endDate)
+
+    var timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
+    var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+                                      console.log("diffDays",diffDays)
+if((startDate == true) && (endDate== true)){
+        $('#duration').val(diffDays);
+        }  });
+    $('#end_date').on('change', function(){
+        var startDate = new Date($('#start_date').val());
+        console.log("start date",startDate)
+
+        var endDate = new Date($('#end_date').val());
+         console.log("end date",endDate)
+
+        var timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
+        var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+        console.log("diffDays",diffDays)
+        if((startDate == true) && (endDate== true)){
+        $('#duration').val(diffDays);
+        }
+    })
+  });
 });
+
+
+

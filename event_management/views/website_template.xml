@@ -10,7 +10,7 @@
                     text-align:left;
                     }
                 </style>
-                <div class="container" >
+                <div class="container">
                     <div class="col-md-6">
                         <form action="/event_booking/form/submit">
                             <div class="form-group" text-align="left">
@@ -49,7 +49,7 @@
                                     <label for="duration">Duration:</label>
 
                                     <input type="duration" class="form-control" name="duration" id="duration"
-                                           required="true"/>
+                                           readonly="true"/>
                                     <br/>
                                 </div>
                             </div>
@@ -68,7 +68,7 @@
                 <div id="wrap">
                     <div class="container">
                         <div class="col-md-12">
-                               <div class="alert alert-success">
+                            <div class="alert alert-success">
                                 Event Booking is Successfully Submitted
                             </div>
                             <h1 align="center">Catering</h1>
@@ -102,7 +102,7 @@
                                             <div>
                                                 <label for="welcome_drink">Welcome Drink:</label>
                                                 <select name="welcome" multiple='multiple'
-                                                        class="form-control link-style"
+                                                        class="advanced-select"
                                                         style="width:300px; height:50px;">
                                                     <t t-foreach="welcome_drink" t-as="rec">
                                                         <option t-esc="rec.dish_name" t-att-value="rec.id"/>
@@ -114,7 +114,7 @@
                                             <div>
                                                 <label for="break_fast">Break Fast:</label>
                                                 <select name="break_fast" multiple='multiple'
-                                                        class="form-control link-style"
+                                                        class="advanced-select"
                                                         style="width:300px; height:50px;">
                                                     <t t-foreach="break_fast" t-as="rec">
                                                         <option t-esc="rec.dish_name" t-att-value="rec.id"/>
@@ -125,7 +125,7 @@
                                             <!---->
                                             <div>
                                                 <label for="lunch">Lunch:</label>
-                                                <select name="lunch" Multiple=' ' class="form-control link-style"
+                                                <select name="lunch" multiple='multiple' class="advanced-select"
                                                         style="width:300px; height:50px;">
                                                     <t t-foreach="lunch" t-as="rec">
                                                         <option t-esc="rec.dish_name" t-att-value="rec.id"/>
@@ -139,8 +139,7 @@
                                             <div>
                                                 <label for="dinner">Dinner:</label>
                                                 <select name="dinner" multiple='multiple'
-                                                        class="form-control link-style"
-                                                        style="width:300px; height:50px;">
+                                                        class="advanced-select" style="width:300px; height:50px;">
                                                     <t t-foreach="dinner" t-as="rec">
                                                         <option t-esc="rec.dish_name" t-att-value="rec.id"/>
                                                     </t>
@@ -150,8 +149,7 @@
                                             <div>
                                                 <label for="snack_drinks">Snack and Drinks:</label>
                                                 <select name="snack_drinks" multiple='multiple'
-                                                        class="form-control link-style"
-                                                        style="width:300px; height:50px;">
+                                                        class="advanced-select" style="width:300px; height:50px;">
                                                     <t t-foreach="snack_drinks" t-as="rec">
                                                         <option t-esc="rec.dish_name" t-att-value="rec.id"/>
                                                     </t>
@@ -161,8 +159,7 @@
                                             <div>
                                                 <label for="beverages">Beverages:</label>
                                                 <select name="beverages" multiple='multiple'
-                                                        class="form-control link-style"
-                                                        style="width:300px; height:50px;">
+                                                        class="advanced-select" style="width:300px; height:50px;">
                                                     <t t-foreach="beverages" t-as="rec">
                                                         <option t-esc="rec.dish_name" t-att-value="rec.id"/>
                                                     </t>
@@ -208,7 +205,7 @@
                 <t t-call="portal.portal_searchbar">
                     <t t-set="title">Event Bookings</t>
                     <button>
-                        <a class="btn-primary" type="submit" name="booking_page" href="/event_booking/form">Create</a>
+                        <a class="btn-primary" type="submit" name="booking_page" style="color:#fff; background-color: green;" href="/event_booking/form">Create</a>
                     </button>
                 </t>
                 <table class="table">

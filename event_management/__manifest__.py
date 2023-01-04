@@ -30,6 +30,11 @@
     'assets': {
         'web.assets_backend': [
             'event_management/static/src/js/action_manager.js',
+            # 'event_management/static/src/js/catering.js',
+
+        ],
+        'web.assets_frontend': [
+            # 'event_management/static/src/js/action_manager.js',
             'event_management/static/src/js/catering.js',
 
         ],

@@ -6,17 +6,7 @@
         <field name="unit_price">20</field>
     </record>
 
-    <record id="apple_juice" model="catering.menu">
-        <field name="dish_name">Apple Juice</field>
-        <field name="category">Welcome Drink</field>
-        <field name="unit_price">20</field>
-    </record>
 
-    <record id="Chikku" model="catering.menu">
-        <field name="dish_name">Chikku</field>
-        <field name="category">Welcome Drink</field>
-        <field name="unit_price">20</field>
-    </record>
 
     <record id="dosa" model="catering.menu">
         <field name="dish_name">Dosa</field>

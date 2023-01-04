@@ -105,5 +105,5 @@ class CateringLine(models.Model):
     price_subtotal = fields.Monetary(string='subtotal')
 
     @api.onchange('unit_price', 'quantity')
-    def _onchange_price_subtotal(self):
+    def onchange_price_subtotal(self):
         self.price_subtotal = self.unit_price * self.quantity

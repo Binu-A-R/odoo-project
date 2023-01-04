@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from odoo import http, fields
-from odoo.exceptions import ValidationError
+# from odoo.exceptions import ValidationError
 from odoo.http import request
 
 
@@ -9,7 +9,6 @@ class WebsitePage(http.Controller):
     def event_page(self, **kw):
         customer = request.env['res.partner'].sudo().search([])
         event_type = request.env['event.property'].sudo().search([])
-        # duration = request.env['event.booking'].sudo().search([])
         return http.request.render('event_management.website_page', {'customer': customer, 'event_type': event_type
                                                                      })
 
@@ -25,8 +24,8 @@ class WebsitePage(http.Controller):
             'start_date': fields.datetime.strptime(post.get('start_date'), '%Y-%m-%dT%H:%M'),
             'end_date': fields.datetime.strptime(post.get('end_date'), '%Y-%m-%dT%H:%M'),
         })
-        if booking.start_date > booking.end_date:
-            raise ValidationError("*** Start date in greater than End date ***")
+        # if booking.start_date > booking.end_date:
+        #     raise ValidationError("*** Start date in greater than End date ***")
 
         welcome_drink = request.env['catering.menu'].sudo().search([('category', '=', 'Welcome Drink')])
         break_fast = request.env['catering.menu'].sudo().search([('category', '=', 'Break Fast')])
@@ -34,10 +33,11 @@ class WebsitePage(http.Controller):
         dinner = request.env['catering.menu'].sudo().search([('category', '=', 'Dinner')])
         snack_drinks = request.env['catering.menu'].sudo().search([('category', '=', 'Snacks and Drinks')])
         beverages = request.env['catering.menu'].sudo().search([('category', '=', 'Beverages')])
-        event_type = request.env['event.booking'].sudo().search([])
+        # event_type = request.env['event.booking'].sudo().search([])
+        price_subtotal = request.env['catering.line'].sudo().search([])
 
         vals = {
-            'event_type': event_type,
+            # 'event_type': event_type,
             'booking': booking,
             'welcome_drink': welcome_drink,
             'break_fast': break_fast,
@@ -45,8 +45,10 @@ class WebsitePage(http.Controller):
             'dinner': dinner,
             'snack_drinks': snack_drinks,
             'beverages': beverages,
+            'price_subtotal':price_subtotal
 
         }
+
         booking.action_catering_service()
         # booking.onchange_duration_id
 
@@ -64,11 +66,13 @@ class WebsitePage(http.Controller):
         print('catering---->', catering)
 
         if post.get('welcome'):
-            catering.update({'is_welcome_drink': True,
-                             'category_welcome_drink_ids': [(0, 0, {'menu_id': post.get('welcome')}
+           l = catering.update({'is_welcome_drink': True,
+                             'category_welcome_drink_ids': [(0, 0, {'menu_id': post.get('welcome'),
+                                                                    # 'price_subtotal':
+                                                                    }
                                                              )]
                              }),
-
+        print ('l',l)
         if post.get('break_fast'):
             catering.update({'is_break_fast': True,
                              'category_break_fast_ids': [(0, 0, {'menu_id': post.get('break_fast')}
@@ -91,20 +95,21 @@ class WebsitePage(http.Controller):
         if post.get('snack_drinks'):
             catering.update({'is_snack_drinks': True,
                              'category_snack_drinks_ids': [(0, 0, {'menu_id': post.get('snack_drinks')}
-                                                      )]
+                                                            )]
                              })
 
         if post.get('beverages'):
             catering.update({'is_beverages': True,
                              'category_beverages_ids': [(0, 0, {'menu_id': post.get('beverages'),
                                                                 }
-                                                      )]
+                                                         )]
                              })
 
         val = {
             'catering': catering,
         }
         catering.compute_grand_total()
+        # catering.onchange_price_subtotal()
         print('val', val)
         return request.render("event_management.tmp_catering_form_success", val)
 

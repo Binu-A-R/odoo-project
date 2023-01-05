@@ -24,7 +24,7 @@ class EventReport(models.TransientModel):
     def print_report(self):
         query = """SELECT ep.name AS event_type, eb.booking_date AS booking_date ,
                         rp.name as customer, eb.state, c.grand_total, eb.event_name ,
-                        cm.dish_name,cm.category,cm.unit_price,cl.description,cl.quantity,cl.price_subtotal
+                        cm.dish_name,cm.category,cm.unit_price,cl.description,cl.quantity,cl.price_sub_total
                    FROM event_property AS ep 
                    INNER JOIN event_booking AS eb ON eb.event_type_id = ep.id 
                    INNER JOIN res_partner AS rp ON eb.partner_id = rp.id 
@@ -102,7 +102,7 @@ class EventReport(models.TransientModel):
         print('print excel')
         query = """SELECT ep.name AS event_type, eb.booking_date AS booking_date ,
                         rp.name as customer, eb.state, c.grand_total, eb.event_name ,
-                        cm.dish_name,cm.category,cm.unit_price,cl.description,cl.quantity,cl.price_subtotal
+                        cm.dish_name,cm.category,cm.unit_price,cl.description,cl.quantity,cl.price_sub_total
                    FROM event_property AS ep 
                    INNER JOIN event_booking AS eb ON eb.event_type_id = ep.id 
                    INNER JOIN res_partner AS rp ON eb.partner_id = rp.id 
@@ -283,7 +283,7 @@ class EventReport(models.TransientModel):
                         sheet.merge_range(row, col + 8, row, col + 10, line['description'], txt)
                         sheet.merge_range(row, col + 11, row, col + 12, line['quantity'], align)
                         sheet.merge_range(row, col + 13, row, col + 14, line['unit_price'], align)
-                        sheet.merge_range(row, col + 15, row, col + 17, line['price_subtotal'], align)
+                        sheet.merge_range(row, col + 15, row, col + 17, line['price_sub_total'], align)
                         row += 1
                 row += 2
         sheet.write(row + 1, col + 14, 'TOTAL', total_style)

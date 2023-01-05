@@ -132,7 +132,7 @@
                                         <span>Unit Price</span>
                                     </th>
 
-                                    <th name="th_price_subtotal" class="text-center">
+                                    <th name="th_price_sub_total" class="text-center">
                                         <span>Subtotal</span>
                                     </th>
                                 </t>
@@ -158,7 +158,7 @@
                                         <span>Unit Price</span>
                                     </th>
 
-                                    <th name="th_price_subtotal" class="text-center">
+                                    <th name="th_price_sub_total" class="text-center">
                                         <span>Subtotal</span>
                                     </th>
                                 </t>
@@ -190,7 +190,7 @@
                                                 </td>
 
                                                 <td>
-                                                    <span t-esc="lines['price_subtotal']"/>
+                                                    <span t-esc="lines['price_sub_total']"/>
                                                 </td>
                                             </t>
                                             <t t-else=" ">
@@ -216,7 +216,7 @@
                                                 </td>
 
                                                 <td>
-                                                    <span t-esc="lines['price_subtotal']"/>
+                                                    <span t-esc="lines['price_sub_total']"/>
                                                 </td>
                                             </t>
 

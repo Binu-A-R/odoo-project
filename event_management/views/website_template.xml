@@ -17,19 +17,21 @@
                                 <div class="form-control">
 
                                     <label for="event_type" text-align="left">Event Type:</label>
-                                    <select name="event" class="form-control link-style">
+                                    <select name="event" class="form-control link-style advanced-select">
                                         <t t-foreach="event_type" t-as="rec">
                                             <option t-esc="rec.name" t-att-value="rec.id"/>
                                         </t>
                                     </select>
                                     <br/>
+                                    <br/>
 
                                     <label for="customer">Customer:</label>
-                                    <select name="partner" class="form-control link-style">
+                                    <select name="partner" class="form-control link-style advanced-select">
                                         <t t-foreach="customer" t-as="rec">
                                             <option t-esc="rec.name" t-att-value="rec.id"/>
                                         </t>
                                     </select>
+                                    <br/>
                                     <br/>
 
                                     <label for="booking_date">Booking Date:</label>
@@ -38,12 +40,12 @@
                                     <br/>
 
                                     <label for="start_date">Start Date:</label>
-                                    <input type="datetime-local" class="form-control" name="start_date" id="start_date"
+                                    <input type="date" class="form-control" name="start_date" id="start_date"
                                            required="true"/>
                                     <br/>
 
                                     <label for="end_date">End Date:</label>
-                                    <input type="datetime-local" class="form-control" name="end_date" id="end_date"
+                                    <input type="date" class="form-control" name="end_date" id="end_date"
                                            required="true"/>
                                     <br/>
                                     <label for="duration">Duration:</label>
@@ -53,7 +55,7 @@
                                     <br/>
                                 </div>
                             </div>
-                            <button type="create" class="btn btn-primary">Create</button>
+                            <button type="create" id="btn" class="btn btn-primary">Create</button>
                         </form>
 
                     </div>
@@ -86,6 +88,7 @@
                                     <input type="number" class="form-control" name="number_of_guest"
                                            id="number_of_guest" required="true"/>
                                     <br/>
+                                    <br/>
                                     <style>
                                         .section1{
                                         display: flex;
@@ -96,77 +99,193 @@
                                         gap: 30px 105px
 
                                         }
+                                        #welcome_quantity{
+                                        width:50px
+                                        }
                                     </style>
                                     <div>
-                                        <div class="section1">
-                                            <div>
-                                                <label for="welcome_drink">Welcome Drink:</label>
-                                                <select name="welcome" multiple='multiple'
-                                                        class="advanced-select"
-                                                        style="width:300px; height:50px;">
-                                                    <t t-foreach="welcome_drink" t-as="rec">
-                                                        <option t-esc="rec.dish_name" t-att-value="rec.id"/>
-                                                    </t>
-                                                </select>
-                                                <br/>
-                                            </div>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <label for="welcome_drink">Welcome Drink:</label>
+                                                </td>
+                                                <td>
+                                                    <select name="welcome" multiple='multiple'
+                                                            class="form-control advanced-select"
+                                                            style="width:250px; height:50px;">
+                                                        <t t-foreach="welcome_drink" t-as="rec">
+                                                            <option t-esc="rec.dish_name" t-att-value="rec.id"/>
+                                                        </t>
 
-                                            <div>
-                                                <label for="break_fast">Break Fast:</label>
-                                                <select name="break_fast" multiple='multiple'
-                                                        class="advanced-select"
-                                                        style="width:300px; height:50px;">
-                                                    <t t-foreach="break_fast" t-as="rec">
-                                                        <option t-esc="rec.dish_name" t-att-value="rec.id"/>
-                                                    </t>
-                                                </select>
-                                                <br/>
-                                            </div>
-                                            <!---->
-                                            <div>
-                                                <label for="lunch">Lunch:</label>
-                                                <select name="lunch" multiple='multiple' class="advanced-select"
-                                                        style="width:300px; height:50px;">
-                                                    <t t-foreach="lunch" t-as="rec">
-                                                        <option t-esc="rec.dish_name" t-att-value="rec.id"/>
-                                                    </t>
-                                                </select>
-                                                <br/>
-                                            </div>
-                                        </div>
-                                        <div class="section2">
-                                            <!---->
-                                            <div>
-                                                <label for="dinner">Dinner:</label>
-                                                <select name="dinner" multiple='multiple'
-                                                        class="advanced-select" style="width:300px; height:50px;">
-                                                    <t t-foreach="dinner" t-as="rec">
-                                                        <option t-esc="rec.dish_name" t-att-value="rec.id"/>
-                                                    </t>
-                                                </select>
-                                                <br/>
-                                            </div>
-                                            <div>
-                                                <label for="snack_drinks">Snack and Drinks:</label>
-                                                <select name="snack_drinks" multiple='multiple'
-                                                        class="advanced-select" style="width:300px; height:50px;">
-                                                    <t t-foreach="snack_drinks" t-as="rec">
-                                                        <option t-esc="rec.dish_name" t-att-value="rec.id"/>
-                                                    </t>
-                                                </select>
-                                                <br/>
-                                            </div>
-                                            <div>
-                                                <label for="beverages">Beverages:</label>
-                                                <select name="beverages" multiple='multiple'
-                                                        class="advanced-select" style="width:300px; height:50px;">
-                                                    <t t-foreach="beverages" t-as="rec">
-                                                        <option t-esc="rec.dish_name" t-att-value="rec.id"/>
-                                                    </t>
-                                                </select>
-                                                <br/>
-                                            </div>
-                                        </div>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control"
+                                                           name="welcome_quantity" id="welcome_quantity"
+                                                           required="true" style="width: 70px;" min="0"/>
+                                                </td>
+                                                <td></td>
+                                                <td>
+                                                    <label for="break_fast">Break Fast:</label>
+                                                </td>
+                                                <td>
+                                                    <select name="break_fast" multiple='multiple'
+                                                            class="form-control advanced-select"
+                                                            style="width:250px; height:50px;">
+                                                        <t t-foreach="break_fast" t-as="rec">
+                                                            <option t-esc="rec.dish_name" t-att-value="rec.id"/>
+                                                        </t>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control" name="break_fast_quantity"
+                                                           id="break_fast_quantity"
+                                                           required="true" style="width: 70px;" min="0"/>
+                                                </td>
+
+                                                <td>
+                                                    <label for="lunch">Lunch:</label>
+
+                                                </td>
+                                                <td>
+                                                    <select name="break_fast" multiple='multiple'
+                                                            class="form-control advanced-select"
+                                                            style="width:250px; height:50px;">
+                                                        <t t-foreach="break_fast" t-as="rec">
+                                                            <option t-esc="rec.dish_name" t-att-value="rec.id"/>
+                                                        </t>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control"
+                                                           name="lunch_quantity" id="lunch_quantity"
+                                                           required="true" style="width: 70px;" min="0"/>
+                                                </td>
+
+
+                                            </tr>
+
+                                            <tr>
+
+                                                <td>
+                                                    <label for="dinner">Dinner:</label>
+
+                                                </td>
+                                                <td>
+                                                    <select name="dinner" multiple='multiple'
+                                                            class="form-control advanced-select"
+                                                            style="width:250px; height:50px;">
+                                                        <t t-foreach="dinner" t-as="rec">
+                                                            <option t-esc="rec.dish_name" t-att-value="rec.id"/>
+                                                        </t>
+                                                    </select>
+                                                </td>
+
+                                                <td>
+                                                    <input type="number" class="form-control"
+                                                           name="dinner_quantity"
+                                                           id="dinner_quantity"
+                                                           required="true" style="width: 70px;" min="0"/>
+                                                </td>
+                                                <td>
+                                                    <label for="snack_drinks">Snack and Drinks:</label>
+                                                </td>
+                                                
+
+                                            </tr>
+
+                                            <!--                                            <div class="section1">-->
+
+                                            <!--                                                <div>-->
+                                            <!--                                                    <label for="welcome_drink">Welcome Drink:</label>-->
+                                            <!--                                                    <select name="welcome" multiple='multiple'-->
+                                            <!--                                                            class="advanced-select"-->
+                                            <!--                                                            style="width:300px; height:50px;">-->
+                                            <!--                                                        <t t-foreach="welcome_drink" t-as="rec">-->
+                                            <!--                                                            <option t-esc="rec.dish_name" t-att-value="rec.id"/>-->
+                                            <!--                                                        </t>-->
+                                            <!--                                                        <input type="number" class="form-control"-->
+                                            <!--                                                               name="welcome_quantity" id="welcome_quantity"-->
+                                            <!--                                                               required="true"/>-->
+                                            <!--                                                    </select>-->
+
+                                            <!--                                                    <br/>-->
+                                            <!--                                                </div>-->
+
+                                            <!--                                                <div>-->
+                                            <!--                                                    <label for="break_fast">Break Fast:</label>-->
+                                            <!--                                                    <select name="break_fast" multiple='multiple'-->
+                                            <!--                                                            class="advanced-select"-->
+                                            <!--                                                            style="width:300px; height:50px;">-->
+                                            <!--                                                        <t t-foreach="break_fast" t-as="rec">-->
+                                            <!--                                                            <option t-esc="rec.dish_name" t-att-value="rec.id"/>-->
+                                            <!--                                                        </t>-->
+                                            <!--                                                    </select>-->
+                                            <!--                                                    <input type="number" class="form-control" name="break_fast_quantity"-->
+                                            <!--                                                           id="break_fast_quantity"-->
+                                            <!--                                                           required="true"/>-->
+                                            <!--                                                    <br/>-->
+                                            <!--                                                </div>-->
+                                            <!--                                                &lt;!&ndash;&ndash;&gt;-->
+                                            <!--                                                <div>-->
+                                            <!--                                                    <label for="lunch">Lunch:</label>-->
+                                            <!--                                                    <select name="lunch" multiple='multiple' class="advanced-select"-->
+                                            <!--                                                            style="width:300px; height:50px;">-->
+                                            <!--                                                        <t t-foreach="lunch" t-as="rec">-->
+                                            <!--                                                            <option t-esc="rec.dish_name" t-att-value="rec.id"/>-->
+                                            <!--                                                        </t>-->
+                                            <!--                                                    </select>-->
+                                            <!--                                                    <input type="number" class="form-control" name="lunch_quantity"-->
+                                            <!--                                                           id="lunch_quantity"-->
+                                            <!--                                                           required="true"/>-->
+                                            <!--                                                    <br/>-->
+                                            <!--                                                </div>-->
+                                            <!--                                            </div>-->
+                                            <!--                                            <div class="section2">-->
+                                            <!--                                                &lt;!&ndash;&ndash;&gt;-->
+                                            <!--                                                <div>-->
+                                            <!--                                                    <label for="dinner">Dinner:</label>-->
+                                            <!--                                                    <select name="dinner" multiple='multiple'-->
+                                            <!--                                                            class="advanced-select" style="width:300px; height:50px;">-->
+                                            <!--                                                        <t t-foreach="dinner" t-as="rec">-->
+                                            <!--                                                            <option t-esc="rec.dish_name" t-att-value="rec.id"/>-->
+                                            <!--                                                        </t>-->
+                                            <!--                                                    </select>-->
+                                            <!--                                                    <input type="number" class="form-control" name="dinner_quantity"-->
+                                            <!--                                                           id="dinner_quantity"-->
+                                            <!--                                                           required="true"/>-->
+                                            <!--                                                    <br/>-->
+                                            <!--                                                </div>-->
+                                            <!--                                                <div>-->
+                                            <!--                                                    <label for="snack_drinks">Snack and Drinks:</label>-->
+                                            <!--                                                    <select name="snack_drinks" multiple='multiple'-->
+                                            <!--                                                            class="advanced-select" style="width:300px; height:50px;">-->
+                                            <!--                                                        <t t-foreach="snack_drinks" t-as="rec">-->
+                                            <!--                                                            <option t-esc="rec.dish_name" t-att-value="rec.id"/>-->
+                                            <!--                                                        </t>-->
+                                            <!--                                                    </select>-->
+                                            <!--                                                    <input type="number" class="form-control"-->
+                                            <!--                                                           name="snack_drinks_quantity" id="snack_drinks_quantity"-->
+                                            <!--                                                           required="true"/>-->
+                                            <!--                                                    <br/>-->
+                                            <!--                                                </div>-->
+                                            <!--                                                <div>-->
+                                            <!--                                                    <label for="beverages">Beverages:</label>-->
+                                            <!--                                                    <select name="beverages" multiple='multiple'-->
+                                            <!--                                                            class="advanced-select" style="width:300px; height:50px;">-->
+                                            <!--                                                        <t t-foreach="beverages" t-as="rec">-->
+                                            <!--                                                            <option t-esc="rec.dish_name" t-att-value="rec.id"/>-->
+                                            <!--                                                        </t>-->
+                                            <!--                                                    </select>-->
+                                            <!--                                                    <input type="number" class="form-control" name="beverages_quantity"-->
+                                            <!--                                                           id="beverages_quantity"-->
+                                            <!--                                                           required="true"/>-->
+                                            <!--                                                    <br/>-->
+                                            <!--                                                </div>-->
+
+                                            <!--                                            </div>-->
+                                        </table>
+
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -190,7 +309,7 @@
                             <br/>
                             <br/>
                             <div>
-                                <a href="/event_booking">My Booking</a>
+                                <a href="/event_booking">Go to home</a>
                             </div>
                         </div>
                     </div>
@@ -205,7 +324,9 @@
                 <t t-call="portal.portal_searchbar">
                     <t t-set="title">Event Bookings</t>
                     <button>
-                        <a class="btn-primary" type="submit" name="booking_page" style="color:#fff; background-color: green;" href="/event_booking/form">Create</a>
+                        <a class="btn btn-primary" type="submit" name="booking_page"
+                           style="color:#fff; background-color: green;" href="/event_booking/form">Create
+                        </a>
                     </button>
                 </t>
                 <table class="table">

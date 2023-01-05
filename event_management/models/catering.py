@@ -27,7 +27,6 @@ class Catering(models.Model):
     category_snack_drinks_ids = fields.One2many('catering.line', 'snacks_drink_menu_id', string="Snacks and Drinks")
     category_beverages_ids = fields.One2many('catering.line', 'beverages_menu_id', string="Beverages")
 
-
     state = fields.Selection(
         selection=[
             ('draft', 'Draft'),
@@ -37,22 +36,25 @@ class Catering(models.Model):
             ('expired', 'Expired'),
         ], default="draft"
     )
-    grand_total = fields.Float(string="Grand total", compute='compute_grand_total', store=True)
 
-    @api.depends('category_welcome_drink_ids.price_subtotal', 'category_break_fast_ids.price_subtotal',
+    grand_total = fields.Float(string="Grand total", compute='compute_grand_total')
+
+    @api.depends('category_welcome_drink_ids.price_subtotal',
+                 'category_break_fast_ids.price_subtotal',
                  'category_lunch_ids.price_subtotal', 'category_dinner_ids.price_subtotal',
                  'category_snack_drinks_ids.price_subtotal', 'category_beverages_ids.price_subtotal')
     def compute_grand_total(self):
-        self.grand_total = sum((self.category_welcome_drink_ids.mapped('price_subtotal')) +
-                               (self.category_break_fast_ids.mapped('price_subtotal')) +
-                               (self.category_lunch_ids.mapped('price_subtotal')) +
-                               (self.category_dinner_ids.mapped('price_subtotal')) +
-                               (self.category_snack_drinks_ids.mapped('price_subtotal')) +
-                               (self.category_beverages_ids.mapped('price_subtotal')))
+        for rec in self:
+            rec.grand_total = sum((rec.category_welcome_drink_ids.mapped('price_subtotal')) +
+                                  (rec.category_break_fast_ids.mapped('price_subtotal')) +
+                                  (rec.category_lunch_ids.mapped('price_subtotal')) +
+                                  (rec.category_dinner_ids.mapped('price_subtotal')) +
+                                  (rec.category_snack_drinks_ids.mapped('price_subtotal')) +
+                                  (rec.category_beverages_ids.mapped('price_subtotal')))
+
 
     def action_confirm(self):
         self.state = 'confirm'
-
 
     def action_deliver(self):
         self.state = 'deliver'
@@ -102,8 +104,12 @@ class CateringLine(models.Model):
                                   related='company_id.currency_id',
                                   default=lambda self: self.env.user.company_id.currency_id.id)
     unit_price = fields.Monetary(string='Unit Price', related='menu_id.unit_price')
-    price_subtotal = fields.Monetary(string='subtotal')
+    price_subtotal = fields.Monetary(string='subtotal', compute='compute_price_subtotal')
+    price_sub_total = fields.Monetary()
 
-    @api.onchange('unit_price', 'quantity')
-    def onchange_price_subtotal(self):
-        self.price_subtotal = self.unit_price * self.quantity
+    @api.depends('unit_price', 'quantity')
+    def compute_price_subtotal(self):
+        for record in self:
+            record.price_subtotal = record.unit_price * record.quantity
+            print('compute', record.price_subtotal)
+            record.price_sub_total = record.price_subtotal

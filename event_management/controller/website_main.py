@@ -21,11 +21,9 @@ class WebsitePage(http.Controller):
             'event_type_id': int(post.get('event')),
             'partner_id': int(post.get('partner')),
             'booking_date': post.get('booking_date'),
-            'start_date': fields.datetime.strptime(post.get('start_date'), '%Y-%m-%dT%H:%M'),
-            'end_date': fields.datetime.strptime(post.get('end_date'), '%Y-%m-%dT%H:%M'),
+            'start_date': post.get('start_date'),
+            'end_date': post.get('end_date'),
         })
-        # if booking.start_date > booking.end_date:
-        #     raise ValidationError("*** Start date in greater than End date ***")
 
         welcome_drink = request.env['catering.menu'].sudo().search([('category', '=', 'Welcome Drink')])
         break_fast = request.env['catering.menu'].sudo().search([('category', '=', 'Break Fast')])
@@ -33,11 +31,9 @@ class WebsitePage(http.Controller):
         dinner = request.env['catering.menu'].sudo().search([('category', '=', 'Dinner')])
         snack_drinks = request.env['catering.menu'].sudo().search([('category', '=', 'Snacks and Drinks')])
         beverages = request.env['catering.menu'].sudo().search([('category', '=', 'Beverages')])
-        # event_type = request.env['event.booking'].sudo().search([])
-        price_subtotal = request.env['catering.line'].sudo().search([])
+        price_subtotal = request.env['catering'].sudo().search([])
 
         vals = {
-            # 'event_type': event_type,
             'booking': booking,
             'welcome_drink': welcome_drink,
             'break_fast': break_fast,
@@ -45,12 +41,12 @@ class WebsitePage(http.Controller):
             'dinner': dinner,
             'snack_drinks': snack_drinks,
             'beverages': beverages,
-            'price_subtotal':price_subtotal
+            'price_subtotal': price_subtotal
 
         }
+        print('vals--->',vals)
 
         booking.action_catering_service()
-        # booking.onchange_duration_id
 
         return request.render("event_management.tmp_event_form_success", vals)
 
@@ -66,41 +62,49 @@ class WebsitePage(http.Controller):
         print('catering---->', catering)
 
         if post.get('welcome'):
-           l = catering.update({'is_welcome_drink': True,
+            catering.update({'is_welcome_drink': True,
                              'category_welcome_drink_ids': [(0, 0, {'menu_id': post.get('welcome'),
-                                                                    # 'price_subtotal':
+                                                                    'quantity': post.get('welcome_quantity')
                                                                     }
                                                              )]
                              }),
-        print ('l',l)
         if post.get('break_fast'):
             catering.update({'is_break_fast': True,
-                             'category_break_fast_ids': [(0, 0, {'menu_id': post.get('break_fast')}
+                             'category_break_fast_ids': [(0, 0, {'menu_id': post.get('break_fast'),
+                                                                 'quantity': post.get('break_fast_quantity')
+                                                                 }
                                                           )]
                              })
 
         if post.get('lunch'):
-            # print('is_lunch----->', post.get('welcome'))
             catering.update({'is_lunch': True,
-                             'category_lunch_ids': [(0, 0, {'menu_id': post.get('lunch')}
+                             'category_lunch_ids': [(0, 0, {'menu_id': post.get('lunch'),
+                                                            'quantity': post.get('lunch_quantity')
+                                                            }
                                                      )]
                              })
 
         if post.get('dinner'):
             catering.update({'is_dinner': True,
-                             'category_dinner_ids': [(0, 0, {'menu_id': post.get('dinner')}
+                             'category_dinner_ids': [(0, 0, {'menu_id': post.get('dinner'),
+                                                             'quantity': post.get('dinner_quantity')
+                                                             }
                                                       )]
                              })
 
         if post.get('snack_drinks'):
             catering.update({'is_snack_drinks': True,
-                             'category_snack_drinks_ids': [(0, 0, {'menu_id': post.get('snack_drinks')}
+                             'category_snack_drinks_ids': [(0, 0, {'menu_id': post.get('snack_drinks'),
+                                                                   'quantity': post.get('snack_drinks_quantity')
+                                                                   }
                                                             )]
                              })
 
         if post.get('beverages'):
             catering.update({'is_beverages': True,
                              'category_beverages_ids': [(0, 0, {'menu_id': post.get('beverages'),
+                                                                'quantity': post.get('beverages_quantity')
+
                                                                 }
                                                          )]
                              })
@@ -108,8 +112,7 @@ class WebsitePage(http.Controller):
         val = {
             'catering': catering,
         }
-        catering.compute_grand_total()
-        # catering.onchange_price_subtotal()
+        # catering.compute_grand_total()
         print('val', val)
         return request.render("event_management.tmp_catering_form_success", val)
 

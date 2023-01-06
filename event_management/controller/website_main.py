@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from odoo import http, fields
+from odoo import http
 # from odoo.exceptions import ValidationError
 from odoo.http import request
 
@@ -63,14 +63,14 @@ class WebsitePage(http.Controller):
 
         if post.get('welcome'):
             catering.update({'is_welcome_drink': True,
-                             'category_welcome_drink_ids': [(0, 0, {'menu_id': post.get('welcome'),
+                             'category_welcome_drink_ids': [(0, 0, {'menu_id': int(post.get('welcome')),
                                                                     'quantity': post.get('welcome_quantity')
                                                                     }
                                                              )]
                              }),
         if post.get('break_fast'):
             catering.update({'is_break_fast': True,
-                             'category_break_fast_ids': [(0, 0, {'menu_id': post.get('break_fast'),
+                             'category_break_fast_ids': [(0, 0, {'menu_id': int(post.get('break_fast')),
                                                                  'quantity': post.get('break_fast_quantity')
                                                                  }
                                                           )]
@@ -78,7 +78,7 @@ class WebsitePage(http.Controller):
 
         if post.get('lunch'):
             catering.update({'is_lunch': True,
-                             'category_lunch_ids': [(0, 0, {'menu_id': post.get('lunch'),
+                             'category_lunch_ids': [(0, 0, {'menu_id': int(post.get('lunch')),
                                                             'quantity': post.get('lunch_quantity')
                                                             }
                                                      )]
@@ -86,7 +86,7 @@ class WebsitePage(http.Controller):
 
         if post.get('dinner'):
             catering.update({'is_dinner': True,
-                             'category_dinner_ids': [(0, 0, {'menu_id': post.get('dinner'),
+                             'category_dinner_ids': [(0, 0, {'menu_id': int(post.get('dinner')),
                                                              'quantity': post.get('dinner_quantity')
                                                              }
                                                       )]
@@ -94,7 +94,7 @@ class WebsitePage(http.Controller):
 
         if post.get('snack_drinks'):
             catering.update({'is_snack_drinks': True,
-                             'category_snack_drinks_ids': [(0, 0, {'menu_id': post.get('snack_drinks'),
+                             'category_snack_drinks_ids': [(0, 0, {'menu_id': int(post.get('snack_drinks')),
                                                                    'quantity': post.get('snack_drinks_quantity')
                                                                    }
                                                             )]
@@ -102,7 +102,7 @@ class WebsitePage(http.Controller):
 
         if post.get('beverages'):
             catering.update({'is_beverages': True,
-                             'category_beverages_ids': [(0, 0, {'menu_id': post.get('beverages'),
+                             'category_beverages_ids': [(0, 0, {'menu_id': int(post.get('beverages')),
                                                                 'quantity': post.get('beverages_quantity')
 
                                                                 }
@@ -112,7 +112,7 @@ class WebsitePage(http.Controller):
         val = {
             'catering': catering,
         }
-        # catering.compute_grand_total()
+        catering.compute_grand_total()
         print('val', val)
         return request.render("event_management.tmp_catering_form_success", val)
 

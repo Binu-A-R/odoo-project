@@ -14,7 +14,7 @@ class EventBooking(models.Model):
     booking_date = fields.Date("Booking Date")
     start_date = fields.Datetime("Start Date", required=True)
     end_date = fields.Datetime("End Date", required=True)
-    duration = fields.Char(string='Duration', compute='onchange_duration_id')
+    duration = fields.Char(string='Duration')
 
     state = fields.Selection(
         selection=[
@@ -33,12 +33,15 @@ class EventBooking(models.Model):
         self.env['catering'].search([('state', '=', 'draft')]).action_confirm()
 
     @api.onchange('start_date', 'end_date')
-    def onchange_duration_id(self):
+    def _compute_duration_id(self):
         if self.start_date and self.end_date:
-            start_date = datetime.strptime(str(self.start_date), '%Y-%m-%d %H:%M:%S')
-            end_date = datetime.strptime(str(self.end_date), '%Y-%m-%d %H:%M:%S')
-            duration = end_date - start_date
-            self.duration = str(duration.days)
+            if self.start_date < self.end_date:
+                start_date = datetime.strptime(str(self.start_date), '%Y-%m-%d %H:%M:%S')
+                end_date = datetime.strptime(str(self.end_date), '%Y-%m-%d %H:%M:%S')
+                duration = end_date - start_date
+                self.duration = str(duration.days)
+            else:
+                self.duration = 0
 
     @api.depends('event_type_id.name', 'event_type_id', 'partner_id.name', 'partner_id', 'start_date', 'end_date')
     def name_get(self):

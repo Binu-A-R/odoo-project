@@ -1,102 +1,100 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <template id="latest_event_dynamic_snippet" name="Latest Events">
-        <section class="oe_structure js_dynamic_snippet">
-            <div class="row">
-                <div class="col-md-12" id="total_booking">
-                    <h1 align="center">Latest Events</h1>
-                    <t t-foreach="latest" t-as="l1">
-                        <div class="card-deck">
-                            <div class="card" style="width: 18rem;">
-                                <img src="/event_management_snippet/static/src/img/event_img.jpeg" class="card-img-top"
-                                     alt="..."/>
+        <section class="oe_structure container js_dynamic_snippet">
+            <div class="row justify-content-center" id="total_booking">
+                <h1 class="heading">Latest Events</h1>
+<!--                <div class="card-group" style="width:70rem; ">-->
 
-                                <div class="card-body">
-                                    <h5 class="card-title">
-                                        Customer:
-                                        <t t-esc="l1.partner_id.name"/>
-                                    </h5>
-                                    <br/>
+<!--                    <t t-foreach="latest" t-as="line">-->
 
-                                    <h6 class="card-text">Event Type:
-                                        <t t-esc="l1.event_type_id.name"/>
-                                    </h6>
-                                    <p class="card-text">Start date:
-                                        <t t-esc="l1.start_date"/>
-                                    </p>
-                                    <p class="card-text">End date:
-                                        <t t-esc="l1.end_date"/>
-                                    </p>
-                                    <a href="/booking/{{booking_details}}" class="btn btn-primary" style="width:100%">Booking
-                                        Details
-                                        <span class="fa fa-eye"/>
-                                    </a>
-                                </div>
-                            </div>
+<!--                        <div class="card" style="gap:0px 10px">-->
+<!--                            <img src="/event_management_snippet/static/src/img/event_img.jpeg" class="card-img-top"-->
+<!--                                 alt="..."/>-->
 
+<!--                            <div class="card-body bg-light">-->
 
-                            <br/>
+<!--                                Customer:-->
+<!--                                <span class="text-danger" t-esc="line.partner_id.name"/>-->
+<!--                                <br/>-->
 
-                        </div>
-                    </t>
-                    <!--                    </div>-->
-                </div>
+<!--                                <h6 class="card-text">Event Type:-->
+<!--                                    <span class="text-danger" t-esc="line.event_type_id.name"/>-->
+<!--                                </h6>-->
+<!--                                <p class="card-text">Start date:-->
+<!--                                    <span class="text-danger" t-esc="line.start_date"/>-->
+<!--                                </p>-->
+<!--                                <p class="card-text">End date:-->
+<!--                                    <span class="text-danger" t-esc="line.end_date"/>-->
+<!--                                </p>-->
+
+<!--                                <a t-attf-href="/booking/{{line.id}}" class="btn btn-primary" style="width:100%">Booking-->
+<!--                                    Details-->
+<!--                                    <i class="fa fa-eye"/>-->
+<!--                                </a>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </t>-->
+<!--                </div>-->
             </div>
         </section>
     </template>
 
-    <template id="booking_details" name="booking_details">
+    <template id="booking_details" name="Booking Detail">
         <t t-call="website.layout">
             <div class="container-fluid">
                 <div class="oe_structure"/>
                 <div class="row">
+                    <div class="col-10">
+<!--                        <div class="col-12">-->
+                            <center>
+                                <div class="prod_details">
+                                    <h1 class="heading">Booking Details</h1>
+                                    <table class="table  table-striped table-dark">
+                                        <thead>
+                                            <tr>
+                                                <br/>
+                                                <th class="text-center">Event Name</th>
+                                                <th class="text-center">Customer</th>
+                                                <th class="text-center">Booking date</th>
+                                                <th class="text-center">Start date</th>
+                                                <th class="text-center">End date</th>
+                                            </tr>
+                                        </thead>
+                                        <tr>
+                                            <td class="text-center" style="width:550px">
+                                                <t t-esc="latest.event_name"/>
+                                            </td>
+                                            <td class="text-center">
+                                                <t t-esc="latest.partner_id.name"/>
+                                            </td>
+                                            <td class="text-center" style="width:150px">
+                                                <t t-esc="latest.booking_date"/>
+                                            </td>
 
-                    <center>
-                        <div class="booking_details">
-                            <h1 class="heading">Booking Details</h1>
-                        </div>
-                        <table class="table">
-                            <thead>
-                                <h2>Event Bookings</h2>
-                                <tr>
-                                    <br/>
-                                    <th class="text-center">Event Name</th>
-                                    <th class="text-center">Booking date</th>
-                                    <th class="text-center">Start date</th>
-                                    <th class="text-center">End date</th>
-                                </tr>
-                            </thead>
-<!--                            <t t-foreach="booking_tree" t-as="tree">-->
-                                <tr>
-                                    <td class="text-center">
-                                        <t t-esc="latest.event_name"/>
-                                    </td>
-                                    <td class="text-center">
-                                        <t t-esc="latest.booking_date"/>
-                                    </td>
+                                            <td class="text-center" style="width:150px">
+                                                <t t-esc="latest.start_date"/>
+                                            </td>
+                                            <td class="text-center" style="width:150px">
+                                                <t t-esc="latest.end_date"/>
+                                            </td>
 
-                                    <td class="text-center">
-                                        <t t-esc="latest.start_date"/>
-                                    </td>
-                                    <td class="text-center">
-                                        <t t-esc="latest.end_date"/>
-                                    </td>
+                                        </tr>
 
-                                </tr>
-<!--                            </t>-->
+                                    </table>
 
-                        </table>
+                                </div>
 
-
-                    </center>
+                            </center>
+<!--                        </div>-->
+                    </div>
                 </div>
-
             </div>
         </t>
     </template>
 
 
-    <template id="latest_event_banner_snippets" inherit_id="website.snippets" name="Event snippets">
+    <template id="external_snippets" inherit_id="website.snippets" name="Event snippets">
         <xpath expr="//div[@id='snippet_effect']//t[@t-snippet][last()]" position="after">
             <t t-snippet="event_management_snippet.latest_event_dynamic_snippet"
                t-thumbnail="/event_management_snippet/static/src/img/Event.jpg"/>

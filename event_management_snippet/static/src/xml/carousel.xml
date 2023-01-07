@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+    <t t-name="event_management_snippet.event_carousel">
+        <div class="card-deck">
+
+            <div id="event_carousel" class="container carousel slide" t-att-data-bs-interval="interval" style="height:240px"
+                 data-bs-ride="carousel">
+                <div class="carousel-inner" >
+                    <t t-foreach="chunks" t-as="item">
+                        <div t-attf-class="carousel-item {{item.is_active ? 'active' : ''}}">
+                            <div class="row align-items-center justify-content-between">
+                                <t t-foreach="item" t-as="line">
+                                    <div class="block span3 col-3">
+                                    <div class="card">
+                                        <img src="/event_management_snippet/static/src/img/event_img.jpeg"
+                                             class="card-img-top" style ="width:18rem"
+                                             alt="..."/>
+                                        <!---->
+                                        <div class="card-body bg-light" style="width:18rem">
+                                            <!---->
+                                            Customer:
+                                            <span class="text-danger" t-esc="line.partner_id[1]"/>
+                                            <br/>
+                                            <!---->
+                                            Event Type:
+                                            <span class="text-danger" t-esc="line.event_type_id[1]"/>
+                                            <br/>
+                                            Start date:
+                                            <span class="text-danger" t-esc="line.start_date"/>
+                                            <br/>
+
+                                            End date:
+                                            <span class="text-danger" t-esc="line.end_date"/>
+
+                                            <!---->
+                                            <a t-attf-href="/booking/{{line.id}}" class="btn btn-primary"
+                                               style="width:100%">Booking
+                                                Details
+                                                <i class="fa fa-eye"/>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#event_carousel" role="button" data-bs-slide="prev"
+               style="left: -100px;">
+                <span class="fa fa-chevron-left fa-2x text-black"/>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#event_carousel" role="button" data-bs-slide="next"
+               style="right: -100px;">
+                <span class="fa fa-chevron-right fa-2x text-black"/>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </t>
+</templates>
+
+
+

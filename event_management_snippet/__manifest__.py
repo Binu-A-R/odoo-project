@@ -13,8 +13,8 @@
     ],
     'assets': {
         'web.assets_frontend': [
+            '/event_management_snippet/static/src/xml/carousel.xml',
             '/event_management_snippet/static/src/js/snippet.js',
-            # 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css'
         ]
 
     },

@@ -1,22 +1,31 @@
 odoo.define('event_management_snippet.dynamic', function (require) {
-   var PublicWidget = require('web.public.widget');
-   var rpc = require('web.rpc');
-   console.log('sndkmc')
-   var Dynamic = PublicWidget.Widget.extend({
-       selector: '.js_dynamic_snippet',
-       start:  function () {
-           var self = this;
-             rpc.query({
-               route: '/latest_events',
-               params: {},
-           }).then(function (result) {
-               self.$('#total_booking').html(result);
-               console.log('result--->', result)
-           });
-       },
-   });
-             console.log('result--->')
+    var core = require('web.core');
+    var publicWidget = require('web.public.widget');
+    var QWeb = core.qweb;
+    var rpc = require('web.rpc');
+    console.log('sndkmc')
 
-   PublicWidget.registry.js_dynamic_snippet = Dynamic;
-   return Dynamic;
-});
+    var EventCarousel = publicWidget.Widget.extend({
+        selector: '.js_dynamic_snippet',
+        willStart: async function(){
+            await rpc.query({
+                route: '/latest_events',
+            }).then((data) =>{
+                this.data = data;
+                console.log('data--->',data);
+            })
+        },
+
+        start: function(){
+            var chunks = _.chunk(this.data,4)
+            chunks[0].is_active = true
+            this.$el.find('#total_booking').html(
+            QWeb.render('event_management_snippet.event_carousel',{
+                chunks
+            })
+            )
+            },
+        })
+        publicWidget.registry.js_dynamic_snippet = EventCarousel;
+        return EventCarousel
+})

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+ <record id="sale_repair_model_action" model="ir.actions.act_window">
+        <field name="name">Sale Repair</field>
+        <field name="res_model">sale.repair</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="sale_repair" name="Sale Repair" parent="stock.menu_stock_warehouse_mgmt" action="sale_repair_model_action" sequence="6"/>
+</odoo>

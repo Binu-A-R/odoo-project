@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="Orderline" t-inherit="point_of_sale.Orderline" t-inherit-mode="extension" owl="1">
+        <xpath expr="//ul[hasclass('info-list')]" position="inside">
+            <t t-if="props.line.product.product_owner_id">
+                <li class="info">
+                    Product owner:
+                    <span class="product_owner">
+<!--                        <s>-->
+                            <t t-esc="props.line.product.product_owner_id[1]"/>
+
+<!--                        </s>-->
+                    </span>
+                </li>
+            </t>
+        </xpath>
+    </t>
+    <t t-name="OrderLinesReceipt" t-inherit="point_of_sale.OrderLinesReceipt" t-inherit-mode="extension" owl="1">
+        <xpath expr="//t[@t-foreach='receipt.orderlines']" position="inside">
+            <t t-if="line.product_owner_id">
+<!--                <div class="pos-receipt-left-padding">-->
+                    <span>Product Owner: </span>
+                    <t t-esc="line.product_owner_id[1]"/>
+<!--                </div>-->
+            </t>
+        </xpath>
+    </t>
+</templates>

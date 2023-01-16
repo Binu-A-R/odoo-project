@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <template id="track_order_temp" name="Order Tracking">
+        <t t-call="website.layout">
+            <h1 align="center" style="text-decoration: underline;">Order Tracking</h1>
+
+            <div id="wrap">
+                <div class="oe_structure">
+                    <div class="container">
+                        <form role="form" method="post" action="/order_tracking/details">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <div></div>
+                            <div class="mb-0 py-2 col-12 s_website_form_field s_website_form_custom s_website_form_required"
+                                 data-type="char" data-name="Field">
+
+                                <div class="row s_col_no_resize s_col_no_bgcolor">
+                                    <label class="col-form-label col-sm-auto s_website_form_label"
+                                           for="order">
+                                        <span class="s_website_form_label_content">Order :</span>
+                                    </label>
+                                    <div class="col-md-8">
+                                        <select id="order" name='name' required="True" class="form-control"
+                                                style="width: 500px;">
+                                            <option t-att-value=""/>
+                                            <t t-foreach="order" t-as="data">
+
+                                                <option t-att-value="data.id" t-esc="data.name"/>
+                                            </t>
+                                        </select>
+                                    </div>
+                                </div>
+                                <p class="text-center">
+                                    <div class="mb-0 py-2 col-12 s_website_form_submit">
+                                        <button type="submit" id="confirm"
+                                                class="btn btn-primary btn-lg s_website_form_send">Submit
+                                        </button>
+
+                                    </div>
+                                </p>
+                            </div>
+
+                        </form>
+                        <t t-if="check">
+                            <div class="track_details">
+                                <div>
+                                    <h3 align="center" style="text-decoration: underline;">Order Details</h3>
+
+                                    <!--                                    <span class="s_website_form_label_content" style="text-decoration: underline;font-weight: bold;size:20px;">Order Details</span>-->
+                                </div>
+                                <br></br>
+                                <table class="table table-condensed table-bordered">
+                                    <thead>
+                                        <tr class="active">
+                                            <th class="text-center">Reference</th>
+                                            <th class="text-center">Product</th>
+                                            <th class="text-center">From</th>
+                                            <th class="text-center">To</th>
+                                            <!--                        <th class="text-end">Customer</th>-->
+
+                                        </tr>
+                                    </thead>
+                                    <t t-foreach="product" t-as="pro">
+                                        <tr>
+                                            <td class="text-center">
+                                                <span t-esc="order_no"/>
+                                            </td>
+                                            <td class="text-center">
+                                                <span t-esc="pro"/>
+                                            </td>
+
+                                            <td class="text-center">
+                                                <span t-esc="from_loc"/>
+                                            </td>
+                                            <td class="text-center">
+                                                <span t-esc="to_loc"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+
+                                </table>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+</odoo>
+
+

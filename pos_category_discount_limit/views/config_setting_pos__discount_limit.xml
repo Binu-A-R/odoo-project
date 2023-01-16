@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="discount_limit_view_form" model="ir.ui.view">
+        <field name="name">discount.limit.view.form</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id"
+               ref="point_of_sale.res_config_settings_view_form"/>
+        <field name="arch"
+               type="xml">
+            <xpath expr="//div[@id='pos_pricing_section']" position="inside">
+                <div class="col-12 col-lg-6 o_setting_box"
+                     id="pos_discount_limit">
+                    <div class="o_setting_right_pane">
+                        <span class="o_form_label">Category Discount</span>
+                        <div class="text-muted">
+                            Pos session wise discount on category
+                        </div>
+                        <div class="content-group mt16">
+                            <field name="pos_category_id" widget="many2many_tags" readonly="False"/>
+                        </div>
+                        <div class="content-group mt16">
+                            <span>Maximum discount limit:</span>
+                            <field name="discount_value" string="Maximum discount limit"/>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

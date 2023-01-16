@@ -8,19 +8,21 @@
         <field name="arch"
                type="xml">
             <xpath expr="//div[@id='pos_pricing_section']" position="inside">
-                <div class="col-12 col-lg-6 o_setting_box"
-                     id="pos_discount_limit">
+                <div class="col-12 col-lg-6 o_setting_box">
+                    <div class="o_setting_left_pane">
+                        <field name="is_pos_discount_limit" readonly="False"/>
+
+                    </div>
                     <div class="o_setting_right_pane">
-                        <span class="o_form_label">Category Discount</span>
+                        <label for="is_pos_discount_limit"/>
                         <div class="text-muted">
                             Pos session wise discount on category
                         </div>
-                        <div class="content-group mt16">
+                        <div class="content-group mt16" attrs="{'invisible': [('is_pos_discount_limit', '=', False)]}">
                             <field name="pos_category_id" widget="many2many_tags" readonly="False"/>
                         </div>
-                        <div class="content-group mt16">
-                            <span>Maximum discount limit:</span>
-                            <field name="discount_value" string="Maximum discount limit"/>
+                        <div class="content-group mt16" attrs="{'invisible': [('is_pos_discount_limit', '=', False)]}">
+                            <field name="discount_value" widget="percentage" readonly="False"/>
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="contact_creation" model="ir.ui.view">
+        <field name="name">Contact creation</field>
+        <field name="model">survey.survey</field>
+        <field name="inherit_id" ref="survey.survey_survey_view_form"/>
+        <field name="arch" type="xml">
+            <page name="questions" position="after">
+                <page string="Contact Relation">
+                    <field name="ques_ids">
+                        <tree editable="bottom" >
+                            <field name="question_id" domain="[('id','in',parent.question_and_page_ids)]"/>
+                            <field name="partner_id" />
+                        </tree>
+                    </field>
+                </page>
+            </page>
+
+        </field>
+
+    </record>
+
+</odoo>

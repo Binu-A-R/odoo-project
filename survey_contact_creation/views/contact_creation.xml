@@ -11,7 +11,7 @@
                     <field name="ques_ids">
                         <tree editable="bottom" >
                             <field name="question_id" domain="[('id','in',parent.question_and_page_ids)]"/>
-                            <field name="partner_id" />
+                            <field name="partner_id"/>
                         </tree>
                     </field>
                 </page>

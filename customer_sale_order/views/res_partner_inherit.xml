@@ -1,0 +1,26 @@
+<odoo>
+    <record model="ir.ui.view" id="customer_details">
+
+        <field name="inherit_id" ref="base.view_partner_form"/>
+
+        <field name="model">res.partner</field>
+
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="sold_product" type="object" class="oe_stat_button" icon="fa-id-card-o">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_value">
+                            <field name="no_of_sold"/>
+                        </span>
+                    </div>
+                </button>
+            </div>
+            <xpath expr="//page[@name='sales_purchases']" position="after">
+                <page name="Sales Order">
+                    <field name="sale_orders_id"></field>
+
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
